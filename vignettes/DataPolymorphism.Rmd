@@ -1,0 +1,69 @@
+---
+title: "Data Polymorphism"
+author: "jkaminsky"
+date: "May 23, 2016"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{DataPolymorphism}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ForecastFramework)
+library(DAAG)
+```
+
+An important aspect of our efforts here is to allow models to automatically determine whether or not data is appropriate to use the model on.  Ideally, we want our data to be as broadly applicable as is reasonable, regardless of its storage.  We can accomplish this using `polymorphism`, a way for different objects to have the same behaviours.  Consider the following two sources of data:
+
+```{r }
+data("Orange")
+listFormData = ObservationList$new(
+  data=Orange
+)
+```
+and 
+```{r}
+library(DAAG)
+data("bomregions")
+matrix_data = t(bomregions[1:8,c(10:17)])
+matrixFormData = IncidenceMatrix$new(
+  data=matrix_data,
+  colData = list(
+    yr=bomregions[1:8,1]
+  )
+)
+```
+If we want, we can think of the `listFormData` as a sparse matrix representation to the `matrixFormData`'s dense representation.  If this is the case, we should be able to use `listFormData` and `matrixFormData` in the same way as matrices.
+
+```{r Comparison, warning = FALSE,message = FALSE}
+listFormData$formArray(
+  row='Tree',
+  col='age',
+  val='circumference'
+)
+listFormData$mat
+matrixFormData$mat
+```
+
+Notice they have the same matrix format.  Moreover, because of the inheritance structure of the classes, we can use any model which takes `MatrixData` input on either one.
+
+```{r}
+model = MoveAheadModel$new()
+model$fit(listFormData)
+model$fit(matrixFormData)
+model$predict(matrixFormData)$mean()$mat
+model$predict(listFormData)$mean()$mat
+```
+While it is nice to be able to use any sort of data when we do our modeling, for it to work well, our models need to be flexible.  MoveAheadModel takes an ```MatrixData``` object as input, which both ```IncidenceMatrix```, and ```ObservationList``` inherit from.  When choosing the class of input for your model, consider attempting to choose a Class as high on the inheritance tree (see `vignette('ClassDiagram','ForecastFramework')`) as possible.  The higher on the tree, the more data you will be able to pass to your model immediately.  In a similar vein, when loading data, try to store it as low on the tree as possible, so that as many models will be able to use it as can be.  
+
+There are also various methods for converting from one class to another, so even if your data isn't in the right format, you can modify it.
+
+```{r Class Changing}
+anotherMatrixFormData = IncidenceMatrix$new(listFormData)
+anotherMatrixFormData$mat
+listFormData$mat
+```
+Though the two objects are of different classes, they take the same data.

@@ -1,0 +1,570 @@
+Evaluating Testing
+	AbstractIncidenceArray has no tests.
+	Started examining tests of AbstractIncidenceMatrix
+		Looking for tests for each method/binding of AbstractIncidenceMatrix
+				No test for subset and metaData
+		Finished Looking for tests for each method/binding of AbstractIncidenceMatrix
+	Finished examining tests of AbstractIncidenceMatrix
+	Started examining tests of AbstractObservationList
+		AbstractObservationList has no equivalence relation
+		Looking for tests for each method/binding of AbstractObservationList
+				No test for debug and aggregate
+				No test for formArray and aggregate
+				No test for initialize and aggregate
+				No test for undebug and aggregate
+			No test for formArray.
+				No test for formArray and aggregate
+				No test for formArray and arr
+				No test for formArray and cnames
+				No test for formArray and colData
+				No test for formArray and dimData
+				No test for formArray and dims
+				No test for formArray and dnames
+				No test for formArray and frame
+				No test for formArray and mat
+				No test for formArray and metaData
+				No test for formArray and ncol
+				No test for formArray and ndim
+				No test for formArray and nrow
+				No test for formArray and rnames
+				No test for formArray and rowData
+		Finished Looking for tests for each method/binding of AbstractObservationList
+	Finished examining tests of AbstractObservationList
+	AbstractRelationalTables has no tests.
+	Started examining tests of AbstractSimulatedIncidenceMatrix
+		Looking for tests for each method/binding of AbstractSimulatedIncidenceMatrix
+				No test for debug and nsim
+				No test for initialize and nsim
+				No test for subsample and nsim
+				No test for summarize and nsim
+				No test for undebug and nsim
+				No test for addColumns and sample
+				No test for addError and sample
+				No test for addRows and sample
+				No test for debug and sample
+				No test for diff and sample
+				No test for head and sample
+				No test for initialize and sample
+				No test for lag and sample
+				No test for mutate and sample
+				No test for scale and sample
+				No test for subsample and sample
+				No test for subset and sample
+				No test for summarize and sample
+				No test for tail and sample
+				No test for undebug and sample
+				No test for debug and simulations
+				No test for initialize and simulations
+				No test for subsample and simulations
+				No test for summarize and simulations
+				No test for undebug and simulations
+				No test for addColumns and dimData
+				No test for addColumns and dims
+				No test for addColumns and dnames
+				No test for addColumns and ndim
+				No test for addColumns and sample
+				No test for addError and dimData
+				No test for addError and dims
+				No test for addError and dnames
+				No test for addError and ndim
+				No test for addError and sample
+				No test for addRows and dimData
+				No test for addRows and dims
+				No test for addRows and dnames
+				No test for addRows and ndim
+				No test for addRows and sample
+				No test for diff and dimData
+				No test for diff and dims
+				No test for diff and dnames
+				No test for diff and ndim
+				No test for diff and sample
+				No test for head and dimData
+				No test for head and dims
+				No test for head and dnames
+				No test for head and ndim
+				No test for head and sample
+				No test for lag and dimData
+				No test for lag and dims
+				No test for lag and dnames
+				No test for lag and ndim
+				No test for lag and sample
+				No test for mutate and dimData
+				No test for mutate and dims
+				No test for mutate and dnames
+				No test for mutate and ndim
+				No test for mutate and sample
+				No test for scale and dimData
+				No test for scale and dims
+				No test for scale and dnames
+				No test for scale and ndim
+				No test for scale and sample
+			No test for subsample.
+				No test for subsample and arr
+				No test for subsample and cnames
+				No test for subsample and colData
+				No test for subsample and dimData
+				No test for subsample and dims
+				No test for subsample and dnames
+				No test for subsample and mat
+				No test for subsample and metaData
+				No test for subsample and ncol
+				No test for subsample and ndim
+				No test for subsample and nrow
+				No test for subsample and nsim
+				No test for subsample and rnames
+				No test for subsample and rowData
+				No test for subsample and sample
+				No test for subsample and simulations
+				No test for subset and dimData
+				No test for subset and sample
+				No test for summarize and arr
+				No test for summarize and cnames
+				No test for summarize and colData
+				No test for summarize and dimData
+				No test for summarize and dims
+				No test for summarize and dnames
+				No test for summarize and mat
+				No test for summarize and metaData
+				No test for summarize and ncol
+				No test for summarize and ndim
+				No test for summarize and nrow
+				No test for summarize and nsim
+				No test for summarize and rnames
+				No test for summarize and rowData
+				No test for summarize and sample
+				No test for summarize and simulations
+				No test for tail and dimData
+				No test for tail and dims
+				No test for tail and dnames
+				No test for tail and ndim
+				No test for tail and sample
+		Finished Looking for tests for each method/binding of AbstractSimulatedIncidenceMatrix
+	Finished examining tests of AbstractSimulatedIncidenceMatrix
+	Started examining tests of ArrayData
+		Looking for tests for each method/binding of ArrayData
+				No test for debug and arr
+				No test for initialize and arr
+				No test for undebug and arr
+				No test for debug and dimData
+				No test for initialize and dimData
+				No test for undebug and dimData
+				No test for debug and dims
+				No test for initialize and dims
+				No test for undebug and dims
+				No test for debug and dnames
+				No test for initialize and dnames
+				No test for undebug and dnames
+				No test for debug and ndim
+				No test for initialize and ndim
+				No test for undebug and ndim
+		Finished Looking for tests for each method/binding of ArrayData
+	Finished examining tests of ArrayData
+	Started examining tests of DataContainer
+		DataContainer does not test its inherited methods.
+		Looking for tests for each method/binding of DataContainer
+				No test for debug and metaData
+				No test for initialize and metaData
+				No test for undebug and metaData
+		Finished Looking for tests for each method/binding of DataContainer
+	Finished examining tests of DataContainer
+	Started examining tests of Forecast
+		Forecast does not test its inherited methods.
+		Looking for tests for each method/binding of Forecast
+				No test for binDist and data
+				No test for debug and data
+				No test for initialize and data
+				No test for mean and data
+				No test for median and data
+				No test for quantile and data
+				No test for undebug and data
+				No test for binDist and forecastMadeTime
+				No test for debug and forecastMadeTime
+				No test for initialize and forecastMadeTime
+				No test for mean and forecastMadeTime
+				No test for median and forecastMadeTime
+				No test for quantile and forecastMadeTime
+				No test for undebug and forecastMadeTime
+				No test for binDist and forecastTimes
+				No test for debug and forecastTimes
+				No test for initialize and forecastTimes
+				No test for mean and forecastTimes
+				No test for median and forecastTimes
+				No test for quantile and forecastTimes
+				No test for undebug and forecastTimes
+				No test for binDist and model
+				No test for debug and model
+				No test for initialize and model
+				No test for mean and model
+				No test for median and model
+				No test for quantile and model
+				No test for undebug and model
+			No test for binDist.
+				No test for binDist and data
+				No test for binDist and forecastMadeTime
+				No test for binDist and forecastTimes
+				No test for binDist and model
+				No test for mean and data
+				No test for mean and forecastMadeTime
+				No test for mean and forecastTimes
+				No test for mean and model
+				No test for median and data
+				No test for median and forecastMadeTime
+				No test for median and forecastTimes
+				No test for median and model
+			No test for quantile.
+				No test for quantile and data
+				No test for quantile and forecastMadeTime
+				No test for quantile and forecastTimes
+				No test for quantile and model
+		Finished Looking for tests for each method/binding of Forecast
+	Finished examining tests of Forecast
+	Started examining tests of ForecastModel
+		Looking for tests for each method/binding of ForecastModel
+			No test for forecast.
+		Finished Looking for tests for each method/binding of ForecastModel
+	Finished examining tests of ForecastModel
+	Started examining tests of FrameData
+		Looking for tests for each method/binding of FrameData
+				No test for debug and frame
+				No test for initialize and frame
+				No test for undebug and frame
+		Finished Looking for tests for each method/binding of FrameData
+	Finished examining tests of FrameData
+	Generic has no tests.
+	Started examining tests of IncidenceForecast
+		IncidenceForecast has no testing function
+		IncidenceForecast has no equivalence relation
+		Looking for tests for each method/binding of IncidenceForecast
+				No test for binDist and data
+				No test for debug and data
+				No test for initialize and data
+				No test for mean and data
+				No test for median and data
+				No test for quantile and data
+				No test for undebug and data
+			No test for initialize.
+				No test for initialize and data
+				No test for initialize and forecastMadeTime
+				No test for initialize and forecastTimes
+				No test for initialize and model
+				No test for initialize and nsim
+				No test for initialize and sample
+		Finished Looking for tests for each method/binding of IncidenceForecast
+	Finished examining tests of IncidenceForecast
+	Started examining tests of IncidenceMatrix
+		IncidenceMatrix has no testing function
+		IncidenceMatrix has no equivalence relation
+		Looking for tests for each method/binding of IncidenceMatrix
+				No test for addColumns and colData
+				No test for addRows and colData
+				No test for debug and colData
+				No test for diff and colData
+				No test for head and colData
+				No test for initialize and colData
+				No test for lag and colData
+				No test for lead and colData
+				No test for mutate and colData
+				No test for scale and colData
+				No test for subset and colData
+				No test for tail and colData
+				No test for undebug and colData
+				No test for addColumns and mat
+				No test for addRows and mat
+				No test for debug and mat
+				No test for diff and mat
+				No test for head and mat
+				No test for initialize and mat
+				No test for lag and mat
+				No test for lead and mat
+				No test for mutate and mat
+				No test for scale and mat
+				No test for subset and mat
+				No test for tail and mat
+				No test for undebug and mat
+				No test for addColumns and rowData
+				No test for addRows and rowData
+				No test for debug and rowData
+				No test for diff and rowData
+				No test for head and rowData
+				No test for initialize and rowData
+				No test for lag and rowData
+				No test for lead and rowData
+				No test for mutate and rowData
+				No test for scale and rowData
+				No test for subset and rowData
+				No test for tail and rowData
+				No test for undebug and rowData
+			No test for initialize.
+				No test for initialize and cnames
+				No test for initialize and colData
+				No test for initialize and mat
+				No test for initialize and metaData
+				No test for initialize and ncol
+				No test for initialize and nrow
+				No test for initialize and rnames
+				No test for initialize and rowData
+			No test for lead.
+				No test for lead and cnames
+				No test for lead and colData
+				No test for lead and mat
+				No test for lead and metaData
+				No test for lead and ncol
+				No test for lead and nrow
+				No test for lead and rnames
+				No test for lead and rowData
+		Finished Looking for tests for each method/binding of IncidenceMatrix
+	Finished examining tests of IncidenceMatrix
+	Started examining tests of MatrixData
+		Looking for tests for each method/binding of MatrixData
+				No test for debug and cnames
+				No test for initialize and cnames
+				No test for undebug and cnames
+				No test for debug and colData
+				No test for initialize and colData
+				No test for undebug and colData
+				No test for debug and mat
+				No test for initialize and mat
+				No test for undebug and mat
+				No test for debug and ncol
+				No test for initialize and ncol
+				No test for undebug and ncol
+				No test for debug and nrow
+				No test for initialize and nrow
+				No test for undebug and nrow
+				No test for debug and rnames
+				No test for initialize and rnames
+				No test for undebug and rnames
+				No test for debug and rowData
+				No test for initialize and rowData
+				No test for undebug and rowData
+		Finished Looking for tests for each method/binding of MatrixData
+	Finished examining tests of MatrixData
+	Started examining tests of Model
+		Model does not test its inherited methods.
+		Looking for tests for each method/binding of Model
+			No test for fit.
+			No test for predict.
+		Finished Looking for tests for each method/binding of Model
+	Finished examining tests of Model
+	Started examining tests of MoveAheadModel
+		MoveAheadModel has no testing function
+		MoveAheadModel has no equivalence relation
+		Looking for tests for each method/binding of MoveAheadModel
+				No test for debug and nsim
+				No test for fit and nsim
+				No test for fit_ and nsim
+				No test for forecast and nsim
+				No test for initialize and nsim
+				No test for predict and nsim
+				No test for predictRow and nsim
+				No test for predictRow_ and nsim
+				No test for predict_ and nsim
+				No test for prepareFitData and nsim
+				No test for prepareForecastData and nsim
+				No test for prepareOutputData and nsim
+				No test for preparePredictData and nsim
+				No test for undebug and nsim
+			No test for initialize.
+				No test for initialize and data
+				No test for initialize and maxPredCol
+				No test for initialize and nsim
+				No test for initialize and predCols
+		Finished Looking for tests for each method/binding of MoveAheadModel
+	Finished examining tests of MoveAheadModel
+	Started examining tests of ObservationList
+		ObservationList has no testing function
+		Looking for tests for each method/binding of ObservationList
+				No test for debug and aDimData
+				No test for formArray and aDimData
+				No test for initialize and aDimData
+				No test for undebug and aDimData
+				No test for debug and aDims
+				No test for formArray and aDims
+				No test for initialize and aDims
+				No test for undebug and aDims
+				No test for debug and aVal
+				No test for formArray and aVal
+				No test for initialize and aVal
+				No test for undebug and aVal
+				No test for debug and arr
+				No test for formArray and arr
+				No test for initialize and arr
+				No test for undebug and arr
+				No test for debug and cnames
+				No test for formArray and cnames
+				No test for initialize and cnames
+				No test for undebug and cnames
+				No test for debug and colData
+				No test for formArray and colData
+				No test for initialize and colData
+				No test for undebug and colData
+				No test for debug and dimData
+				No test for formArray and dimData
+				No test for initialize and dimData
+				No test for undebug and dimData
+				No test for debug and dims
+				No test for formArray and dims
+				No test for initialize and dims
+				No test for undebug and dims
+				No test for debug and dnames
+				No test for formArray and dnames
+				No test for initialize and dnames
+				No test for undebug and dnames
+				No test for debug and mat
+				No test for formArray and mat
+				No test for initialize and mat
+				No test for undebug and mat
+				No test for debug and ncol
+				No test for formArray and ncol
+				No test for initialize and ncol
+				No test for undebug and ncol
+				No test for debug and ndim
+				No test for formArray and ndim
+				No test for initialize and ndim
+				No test for undebug and ndim
+				No test for debug and nrow
+				No test for formArray and nrow
+				No test for initialize and nrow
+				No test for undebug and nrow
+				No test for debug and rnames
+				No test for formArray and rnames
+				No test for initialize and rnames
+				No test for undebug and rnames
+				No test for debug and rowData
+				No test for formArray and rowData
+				No test for initialize and rowData
+				No test for undebug and rowData
+				No test for debug and slice
+				No test for formArray and slice
+				No test for initialize and slice
+				No test for undebug and slice
+			No test for initialize.
+				No test for initialize and aDimData
+				No test for initialize and aDims
+				No test for initialize and aVal
+				No test for initialize and aggregate
+				No test for initialize and arr
+				No test for initialize and cnames
+				No test for initialize and colData
+				No test for initialize and dimData
+				No test for initialize and dims
+				No test for initialize and dnames
+				No test for initialize and frame
+				No test for initialize and mat
+				No test for initialize and metaData
+				No test for initialize and ncol
+				No test for initialize and ndim
+				No test for initialize and nrow
+				No test for initialize and rnames
+				No test for initialize and rowData
+				No test for initialize and slice
+		Finished Looking for tests for each method/binding of ObservationList
+	Finished examining tests of ObservationList
+	Started examining tests of RecursiveForecastModel
+		Looking for tests for each method/binding of RecursiveForecastModel
+				No test for debug and data
+				No test for fit and data
+				No test for fit_ and data
+				No test for forecast and data
+				No test for initialize and data
+				No test for predict and data
+				No test for predictRow and data
+				No test for predictRow_ and data
+				No test for predict_ and data
+				No test for prepareFitData and data
+				No test for prepareForecastData and data
+				No test for prepareOutputData and data
+				No test for preparePredictData and data
+				No test for undebug and data
+				No test for debug and maxPredCol
+				No test for fit and maxPredCol
+				No test for fit_ and maxPredCol
+				No test for forecast and maxPredCol
+				No test for initialize and maxPredCol
+				No test for predict and maxPredCol
+				No test for predictRow and maxPredCol
+				No test for predictRow_ and maxPredCol
+				No test for predict_ and maxPredCol
+				No test for prepareFitData and maxPredCol
+				No test for prepareForecastData and maxPredCol
+				No test for prepareOutputData and maxPredCol
+				No test for preparePredictData and maxPredCol
+				No test for undebug and maxPredCol
+				No test for debug and predCols
+				No test for fit and predCols
+				No test for fit_ and predCols
+				No test for forecast and predCols
+				No test for initialize and predCols
+				No test for predict and predCols
+				No test for predictRow and predCols
+				No test for predictRow_ and predCols
+				No test for predict_ and predCols
+				No test for prepareFitData and predCols
+				No test for prepareForecastData and predCols
+				No test for prepareOutputData and predCols
+				No test for preparePredictData and predCols
+				No test for undebug and predCols
+			No test for fit.
+				No test for fit and data
+				No test for fit and maxPredCol
+				No test for fit and predCols
+			No test for fit_.
+				No test for fit_ and data
+				No test for fit_ and maxPredCol
+				No test for fit_ and predCols
+			No test for predict.
+				No test for predict and data
+				No test for predict and maxPredCol
+				No test for predict and predCols
+			No test for predictRow.
+				No test for predictRow and data
+				No test for predictRow and maxPredCol
+				No test for predictRow and predCols
+			No test for predictRow_.
+				No test for predictRow_ and data
+				No test for predictRow_ and maxPredCol
+				No test for predictRow_ and predCols
+			No test for predict_.
+				No test for predict_ and data
+				No test for predict_ and maxPredCol
+				No test for predict_ and predCols
+			No test for prepareFitData.
+				No test for prepareFitData and data
+				No test for prepareFitData and maxPredCol
+				No test for prepareFitData and predCols
+			No test for prepareForecastData.
+				No test for prepareForecastData and data
+				No test for prepareForecastData and maxPredCol
+				No test for prepareForecastData and predCols
+			No test for prepareOutputData.
+				No test for prepareOutputData and data
+				No test for prepareOutputData and maxPredCol
+				No test for prepareOutputData and predCols
+			No test for preparePredictData.
+				No test for preparePredictData and data
+				No test for preparePredictData and maxPredCol
+				No test for preparePredictData and predCols
+		Finished Looking for tests for each method/binding of RecursiveForecastModel
+	Finished examining tests of RecursiveForecastModel
+	RelationalData has no tests.
+	SimpleForecast has no tests.
+	Started examining tests of SimulatedForecast
+		Looking for tests for each method/binding of SimulatedForecast
+				No test for binDist and nsim
+				No test for debug and nsim
+				No test for initialize and nsim
+				No test for mean and nsim
+				No test for median and nsim
+				No test for quantile and nsim
+				No test for undebug and nsim
+				No test for binDist and sample
+				No test for debug and sample
+				No test for initialize and sample
+				No test for mean and sample
+				No test for median and sample
+				No test for quantile and sample
+				No test for undebug and sample
+		Finished Looking for tests for each method/binding of SimulatedForecast
+	Finished examining tests of SimulatedForecast
+	SimulatedIncidenceMatrix has no tests.
+Done Evaluating Testing

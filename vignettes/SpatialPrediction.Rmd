@@ -1,0 +1,195 @@
+---
+title: "Introduction to Spatial Prediction"
+author: "jkaminsky"
+date: "December 21, 2016"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Prediction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(DAAG)
+```
+##Overview
+
+Spatial Prediction cares about making models based on spatially distributed data with respect to time.  It includes data structures, and skeletons of models in order to make it easy for users to quickly prototype new models on data in a wide variety of formats.
+
+##Data
+
+Suppose we want to use the following data to model rainfall over time in the various regions given below.
+
+```{r data}
+library(DAAG)
+data("bomregions")
+matrix_data = t(bomregions[1:8,c(10:17)])
+colnames(matrix_data) = bomregions[1:8,1]
+matrix_data
+```
+
+and suppose that we want to model the rainfall in the different regions over time.
+
+## Example 1: Moving Average Models
+
+A relatively simple prediction model for space time data, is to predict the result for a location at time ```t``` to be the average of the values of that location at ```k``` previous times.  We will walk through the process of creating such a model.
+
+####Data
+
+For this model, all the data we need fits nicely into a space-time Matrix.
+```{r IncidenceMatrix}
+SpaceTimeMatrix <- IncidenceMatrix$new(data=matrix_data)
+```
+The class ```IncidenceMatrix``` is an R6 class, and holds our data as well as several other pieces of information.  For a more detailed look into R6 classes, and how they differ from other ways of using R, see `vignette('R6 Classes',ForecastFramework)` or the `R6` package.  
+
+####Model
+
+For our model, we start by picking some model parameters.  For example, we can choose the number of time steps to go back ```windowSize```.  Now lets walk through how to prototype this model:
+
+```{r Model 1,eval=FALSE}
+MovingAverageModel <- R6Class(
+	inherit = Model,
+```
+We start by defining our new modeling class, ```MovingAverageModel```  We want this to be recognized as a model by other code using ```ForecastFramework```, so we  so we have it inherit from ```Model```, one of the package classes.  The ```Model``` class defines some mandatory functions we need to extend.  These can be found by referencing the help page ```?Model```, or by consulting the ```vignette('ClassDiagram','ForecastFramework')```.
+```{r Model 2,eval=FALSE}
+  private = list(
+    window = NA,
+    windowSize = 0
+  )
+```
+  The private section of the class is for aspects of the class we do not want the user to access directly.  These should be elements of the class which are called by other methods, and not directly.  Both methods (functions), and variables can be stored here.
+```{r Model 3,eval=FALSE}
+	public = list(
+```
+The public section of the class is for anything the user should have direct access to.
+```{r Model 4,eval=FALSE}
+		#' @method initialize Create a new Moving Average Model
+		#' @param windowSize The size of window over which to do the moving average
+		initialize = function(windowSize = 1){
+			private$window = as.integer(1:windowSize)
+			private$windowSize = as.integer(windowSize)
+	  }
+```
+The first method we modify is the initialization method.  This method gets called whenever we instantiate a ```MovingAverageModel``` with ```MovingAverageModel$new()```.  See that we have passed ```windowSize``` to the model.  Also note the two commented lines right before the method.  These are documentation strings, and will be used to automatically document the class' methods.  This function takes the window size, and assigns the two variables defined in the private section.  Note that we access them through the `private` keyword.  When accessing members of the class which are public, we will use the `self` keyword in the same way.
+```{r Model 5 ,eval=FALSE}
+    #' @method fit This function does nothing.
+    #' @param data This is included for compliance with Model.R
+    fit = function(data){
+      #The model is always fitted
+      return()
+    },
+```
+The fit method is supposed to take a data set, and use it to automatically configure model parameters.  However, our model is simple enough that no parameter modification is necessary.  So, we have the function do nothing.
+```{r Model 6,eval=FALSE}
+		#' @method predict Predict as much as possible from the new data
+		#' @param newdata The data to use when making predictions.
+		predict = function(newdata){
+		  if(!('MatrixData' %in% class(newdata))){
+		    stop("This operation requires matrix-like data")
+		  }
+		  # for debugging: see AbstractClasses::Generic::debug for details.
+		  if('predict' %in% private$.debug){
+		    browser()
+		  }
+		  #This is an R6 specific thing.  We want to clone arguments before we use them, because
+		  #  otherwise we will also modify the original.
+		  newdata = newdata$clone(TRUE)
+		  #We'll add a column so the lagging works out correctly.
+		  #We can think of this as adding the prediction column to the data.
+		  newdata$addColumns(1)
+		  #We pre-allocate our return as another as a subclass of the Forecast class.
+		  #SimulatedIncidenceMatrix is the only one currently defined, so...
+		  #We're not doing anything stochastic, so we set the number of simulations to 1.
+		  rc = SimulatedIncidenceMatrix$new(newdata,nsim=1)
+		  #First we use the lag function of IncidenceMatrix to reogranize the data.
+		  #We want to use every row at every time step in the window.  The lag function allows us
+		  #to create new rows for these previous time steps.
+		  newdata$lag(private$window)
+		  #Since we added new rows, in particular for each old row we added private$windowSize new rows
+		  #  we divide.
+		  for(row in 1:newdata$nrow/private$windowSize){
+		    #The seq call is the index of all rows corresponding to the original row `row`
+		    #In other words, we take the mean of all rows corresponding to lagged versions of the original row
+		    #2 means take the mean of each column
+		    rc$mutate(rows=row,data=apply(newdata$mat[seq(row,newdata$nrow,private$windowSize),],2,mean))
+		  }
+		  return(IncidenceForecast$new(data=rc))
+		}
+```
+predict is the main function of the class.  We first introduce extra rows to cover the whole window.  Then we take the average over the window for each row, and store that in the apropriate part of our output.  Notice here that the IncidenceMatrix class does most of the work, and we had very little manual steps.  Ideally, most of the prediction process is actions taken by the data on itself.  This allows us to make as few assumptions about the data as possible.
+
+
+```{r Model Full,echo=TRUE}
+MovingAverageModel <- R6Class(
+	classname = "MovingAverageModel",
+	inherit = Model,
+	private = list(
+    window = NA,
+    windowSize = 0
+  ),
+	public = list(
+		initialize = function(windowSize = 1){
+			private$window = as.integer(1:windowSize)
+			private$windowSize = as.integer(windowSize)
+	  },
+		#' @method fit This function does nothing.
+    #' @param data This is included for compliance with Model.R
+		fit = function(data){
+      #This model is always fitted.
+      return()
+    },
+		#' @method predict Predict as much as possible from the new data
+		#' @param newdata The data to use when making predictions.
+		predict = function(newdata){
+		  if(!('MatrixData' %in% class(newdata))){
+		    stop("This operation requires matrix-like data")
+		  }
+		  # for debugging: see AbstractClasses::Generic::debug for details.
+		  if('predict' %in% private$.debug){
+		    browser()
+		  }
+		  #We'll add a column so the lagging works out correctly.
+		  #We can think of this as adding the prediction column to the data.
+		  newdata$addColumns(1)
+		  #We pre-allocate our return as another as a subclass of the Forecast class.
+		  #SimulatedIncidenceMatrix is the only one currently defined, so...
+		  #We're not doing anything stochastic, so we set the number of simulations to 1.
+		  rc = SimulatedIncidenceMatrix$new(newdata,nsim=1)
+		  #First we use the lag function of IncidenceMatrix to reogranize the data.
+		  #We want to use every row at every time step in the window.  The lag function allows us
+		  #to create new rows for these previous time steps.
+		  newdata$lag(private$window)
+		  #Since we added new rows, in particular for each old row we added private$windowSize new rows
+		  #  we divide.
+		  for(row in 1:newdata$nrow/private$windowSize){
+		    #The seq call is the index of all rows corresponding to the original row `row`
+		    #In other words, we take the mean of all rows corresponding to lagged versions of the original row
+		    #2 means take the mean of each column
+		    rc$mutate(rows=row,data=apply(newdata$mat[seq(row,newdata$nrow,private$windowSize),],2,mean))
+		  }
+		  return(IncidenceForecast$new(data=rc,forecastTimes=sapply(1:rc$ncol,function(x){return(TRUE)})))
+		}
+	)
+)
+```
+
+```{r Prediction, warning = FALSE}
+TheModel <- MovingAverageModel$new(windowSize=3)
+ TheModel$fit(data=SpaceTimeMatrix$subset(cols=-SpaceTimeMatrix$ncol,mutate=FALSE))
+ TheModel$predict(newdata=SpaceTimeMatrix$subset(cols=-SpaceTimeMatrix$ncol,mutate=FALSE))$mean()$mat
+```
+The final output is a matrix with 5 columns, and 3 rows.  The rows correspond to the rows of our original matrix.  Notice that we predicted on only the first 4 columns of SpaceTimeMatrix, however the output has 5 columns.  The first 4 columns represent the same time steps as the first 4 columns of our original matrix, and the 5th column represents the time after the 4th column, which is the same time as the 5th column we chose not to predict on.  The first three columns are NA, because in order to compute those values, we need values not present in the current matrix.  To see how accurate we were, lets compare our results to the true values.
+
+You may have also noticed that in order to extract the matrix, we use `TheModel$predict(...)$mean()$mat`.  This is because the prediction is its own object.  If we print it to screen, we see:
+```{r stuff, warning=FALSE}
+prediction <- TheModel$predict(newdata=SpaceTimeMatrix$subset(cols=-SpaceTimeMatrix$ncol,mutate=FALSE))
+prediction
+```
+We see that this object is another R6 class, `IncidenceForecast` containing information about when the prediction was created, which columns are predicted, and other information.  We can use some of the features of our IncidenceForecast to calculate.  For example, here is the absolute error of the mean prediction.
+
+```{r Error, warning=FALSE}
+truth <- SpaceTimeMatrix
+abs_error <- abs(prediction$mean()$mat-truth$mat)
+abs_error
+```

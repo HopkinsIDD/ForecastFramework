@@ -1,0 +1,239 @@
+---
+title: "Introduction to Spatial Prediction"
+author: "jkaminsky"
+date: "December 21, 2016"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Forecasting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+##Overview
+
+Forecasting is predicting over some range of time into the future.  For the purposes of this package, Forecasting involves the prediction of one or more quantities between the last data time, and some specified amount of time in the future.
+
+####Prediction vs Forecast
+
+By default, prediction might involve predicting before the end of the data (interpolating), estimating entirely different data concurrent to the input data, or performing some change on the data (such as smoothing).  
+
+##Basic Forecast Model
+
+We're going to create a model which forecasts Incidence by taking the previous value and moving it foreward.
+
+To start, we look at the ForecastModel class (It may be better to look at its help page `?ForecastModel`, and/or the package file ```vignette(`ClassDiagram`,'ForecastFramework')```
+
+```{r Outline,eval=FALSE}
+  public = list(
+    #' @method fit_ Get the model ready to predict
+    #' @param data The data to fit the model to.
+    fit = function(data){
+      ...
+    },
+    #' @method forecast Predict some number of time steps into the future.
+    #' @param newdata The data to forecast from
+    #' @param steps The number of timesteps into the future to predict.
+    forecast = function(newdata,steps){
+      ...
+    },
+    #' @method initialize Create a new instance of this class. 
+    initialize = function(){
+      ...
+    },
+    #' @method predict predict using the model.
+    #' @param newdata Predict using the model.
+    predict = function(newdata){
+      ...
+    },
+  )
+```
+
+####Data
+Before we make our model, lets consider the data we want to look at.  The `bomregions` data from the `DAAG` package contains rainfall information for various regions over time.  Given this information, we may want to create a model to see which Region will have the highest rainfall over the next few years.
+```{r}
+library(DAAG)
+data("bomregions")
+data_matrix = t(bomregions[,10:17])
+colnames(data_matrix) = bomregions[,1]
+data_matrix[,101:109]
+data_matrix = IncidenceMatrix$new(data_matrix)
+```
+
+
+##Method by Method
+
+####fit
+
+For the fit method, we get the model ready to fit.  For this demonstration, we're going to use a glm model to do most of the calculation.  So the last line is most important, and everything before that is just preparation to get to that point.
+```{r fit , eval=FALSE}
+#' @method fit_ Get the model ready to predict
+    #' @param data The data to fit the model to.
+    fit = function(data=self$data){
+      private$.data = IncidenceMatrix$new(data)
+      highestRegion = matrix(
+        which(apply(self$data$mat,2,function(x){x==max(x)})) %% self$data$nrow,
+        1,
+        self$data$ncol,
+        dimnames = list('y',NULL)
+      )
+      self$data$lag(c(self$windowSize + 1:self$windowStart))
+      eqn = formula(paste('y',paste(self$data$rnames,collapse=' + '),sep=' ~ '))
+      self$data$addRows(1)
+      self$data$mutate(row=self$data$nrow,data=highestRegion)
+      private$.model = glm(eqn,data = as.data.frame(t(self$data$mat)))
+    }
+```
+Note that we reference ```private$.data```, and ```private$.model```, as well as ```self$data```, ```self$model```, ```self$windowSize``` and ```self$windowStart```.  We will need to define these as part of our model, since we do not inherit them from ```ForecastModel```.  However, the methods of ```self$data``` already exist, and we will not need to write them.
+####forecast
+We again see that there is a signifcant line (the final line), and several steps in preparation.  Moreover, the data's built in functions and the glm package do most of the work.  We define a new ```private$.newdata``` and ```self$newdata``` here which we will need to define later.
+```{r forecast , eval=FALSE}
+    #' @method forecast Predict some number of time steps into the future.
+    #' @param newdata The data to forecast from
+    #' @param steps The number of timesteps into the future to predict.
+    forecast = function(newdata,steps){
+      private$.newdata = IncidenceMatrix$new(newdata)
+      if(steps > self$windowStart){
+        stop("Model needs to be fit differently to forecast this far ahead.")
+      }
+      self$newdata$addColumns(steps)
+      self$newdata$lag(c(self$windowSize + 1:self$windowStart))
+      self$newdata$tail(k=steps,direction=2)
+      output = IncidenceMatrix$new(matrix(
+        round(predict(self$model,newdata=as.data.frame(t(self$newdata$mat)))),
+        1,
+        steps
+      ))
+      
+      SimpleForecast$new(
+        data=output,
+        forecastTimes = rep(TRUE,steps)
+      )
+    }
+```
+
+####predict
+Not much to say here, ```predict``` is just forecasting the next time step.
+```{r predict , eval=FALSE}
+    #' @method predict predict using the model.
+    #' @param newdata Predict using the model.
+    predict = function(newdata = private$.newdata){
+      self$forecast(newdata,1)
+    }
+```
+
+####initialize
+We want to be able to set the paramters we defined for fitting and predicting.  The initialize function is the right place to do that.  We will set them here.
+```{r initialize , eval=FALSE}
+    #' @method initialize Create a new instance of this class. 
+    #' @param windowSize How many different time steps to use when forecasting.
+    #' @param windowStart How far back to start forecasting.
+    initialize = function(windowSize = 3,windowStart = 3 ){
+      self$windowSize = windowSize
+      self$windowStart = windowStart
+    }
+```
+
+##Final Forecasting Class
+When we put everything together and define the missing pieces, we obtain
+```{r Full Model}
+MaximumRegionForecastModel <- R6Class(
+  inherit=ForecastModel,
+  private = list(
+    .data = MatrixData$new(),
+    .newdata = MatrixData$new(),
+    .model = "glm",
+    .windowSize = 3,
+    .windowStart = 3
+  ),
+  public = list(
+    #' @method fit_ Get the model ready to predict
+    #' @param data The data to fit the model to.
+    fit = function(data=self$data){
+      private$.data = IncidenceMatrix$new(data)
+      highestRegion = matrix(
+        which(apply(self$data$mat,2,function(x){x==max(x)})) %% self$data$nrow,
+        1,
+        self$data$ncol,
+        dimnames = list('y',NULL)
+      )
+      self$data$lag(c(self$windowSize + 1:self$windowStart))
+      eqn = formula(paste('y',paste(self$data$rnames,collapse=' + '),sep=' ~ '))
+      self$data$addRows(1)
+      self$data$mutate(row=self$data$nrow,data=highestRegion)
+      private$.model = glm(eqn,data = as.data.frame(t(self$data$mat)))
+    },
+    #' @method forecast Predict some number of time steps into the future.
+    #' @param newdata The data to forecast from
+    #' @param steps The number of timesteps into the future to predict.
+    forecast = function(newdata,steps){
+      private$.newdata = newdata
+      if(steps > self$windowStart){
+        stop("Model needs to be fit differently to forecast this far ahead.")
+      }
+      self$newdata$addColumns(steps)
+      self$newdata$lag(c(self$windowSize + 1:self$windowStart))
+      self$newdata$tail(k=steps,direction=2)
+      output = IncidenceMatrix$new(matrix(
+        round(predict(self$model,newdata=as.data.frame(t(self$newdata$mat)))),
+        1,
+        steps
+      ))
+      
+      SimpleForecast$new(
+        data=output,
+        forecastTimes = rep(TRUE,steps)
+      )
+    },
+    #' @method initialize Create a new instance of this class. 
+    #' @param windowSize How many different time steps to use when forecasting.
+    #' @param windowStart How far back to start forecasting.
+    initialize = function(windowSize = 3,windowStart = 3 ){
+      self$windowSize = windowSize
+      self$windowStart = windowStart
+    },
+    #' @method predict predict using the model.
+    #' @param newdata Predict using the model.
+    predict = function(newdata = private$.newdata){
+      self$forecast(newdata,1)
+    }
+  ),
+  active = list(
+    data = function(value){
+      if(missing(value)){
+        return(private$.data)
+      } else{
+        stop("Do not write directly to the data.  Fit the model instead.")
+      }
+    },
+    newdata = function(value){
+      if(missing(value)){
+        return(private$.newdata)
+      } else{
+        stop("Do not write directly to the data.  Fit the model instead.")
+      }
+    },
+    model = function(value){
+      if(missing(value)){
+        return(private$.model)
+      } else{
+        stop("Do not write directly to the model  Fit the model instead.")
+      }
+    },
+    windowSize = function(value){
+      private$defaultActive(type='private',name='.windowSize',value=value)
+    },
+    windowStart = function(value){
+      private$defaultActive(type='private',name='.windowSize',value=value)
+    }
+  )
+)
+```
+With the model done, we can test it on the data.
+```{r Evaluation}
+RainForecaster = MaximumRegionForecastModel$new()
+RainForecaster$fit(data_matrix)
+data_matrix$rnames[RainForecaster$forecast(data_matrix,3)$data$mat]
+```
