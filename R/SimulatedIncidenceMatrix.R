@@ -36,7 +36,7 @@ SimulatedIncidenceMatrix <- R6Class(
       ##  private$ncore = detectCores()
       ##  private$parallelEnvironment = makeCluster(private$ncore)
       ##}
-      if('AbstractSimulatedIncidenceMatrix' %in% class(data)){
+      if('ArrayData' %in% class(data)){
         private$.arr= data$simulations
         #private$.arr= array(data$arr,c(data$nrow,data$ncol,nsim))
         private$.metaData = data$metaData
