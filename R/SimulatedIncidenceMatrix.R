@@ -40,6 +40,7 @@ SimulatedIncidenceMatrix <- R6Class(
         private$.arr = data
         private$.dims = dim(data)
         private$.ndim = length(dim(data))
+        return()
       } else if('ArrayData' %in% class(data)){
         private$.arr= data$simulations
         #private$.arr= array(data$arr,c(data$nrow,data$ncol,nsim))
