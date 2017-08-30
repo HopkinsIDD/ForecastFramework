@@ -48,4 +48,3 @@ IncidenceForecast <- R6Class(
     }
   )
 )
-

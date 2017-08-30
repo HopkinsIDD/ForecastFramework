@@ -44,8 +44,9 @@ Forecast <- R6Class(
     },
     #' @method quantile This \bold{must} be extended.  Get the cutoffs for each percentile in alphas.
     #' @param alphas A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for.
+    #' @param na.rm A boolean regarding whether to remove NA values before computing the quantiles.
     #' @return an ArrayData.
-    quantile = function(alphas){
+    quantile = function(alphas,na.rm=FALSE){
       private$defaultAbstract()
     },
     #' @method binDist This \bold{must} be extended.  Get the distribution of simulations of the data within fixed bins.
@@ -115,13 +116,14 @@ SimulatedForecast <- R6Class(
     },
     #' @method quantile Get the cutoffs for each percentile in alphas.
     #' @param alphas A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for.
+    #' @param na.rm A boolean regarding whether to remove NA values before computing the quantiles.
     #' @return an ArrayData.
-    quantile = function(alphas){
+    quantile = function(alphas,na.rm=FALSE){
       SimulatedIncidenceMatrix$new(
         lapply(
           alphas,
           function(alpha){
-            self$data$summarize(function(x){quantile(x , alpha)})
+            self$data$summarize(function(x){quantile(x , alpha,na.rm=na.rm)})
           }
         )
       )
