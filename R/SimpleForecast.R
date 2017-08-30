@@ -43,8 +43,9 @@ SimpleForecast <- R6Class(
     },
     #' @method quantile This throws an error.  This method is not meaningful for this data.
     #' @param alphas A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for.
+    #' @param na.rm A boolean regarding whether to remove NA values before computing the quantiles.
     #' @return an ArrayData.
-    quantile = function(alphas){
+    quantile = function(alphas,na.rm=FALSE){
       stop("This doesn't really make sense.")
     },
     #' @method initialize Create a new SimpleForecast.
