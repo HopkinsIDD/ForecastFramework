@@ -98,6 +98,7 @@ ObservationList<- R6Class(
       } else {
         stop("array metadata should be a list of columns in the data frame.")
       }
+      ## This should not fail when the dimData is NULL
       private$.dimData = mapply(dim=self$aDims,data=self$aDimData,function(dim,data){
         self$frame %>%
           group_by_(dim) %>%
