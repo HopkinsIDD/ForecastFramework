@@ -51,8 +51,10 @@ Forecast <- R6Class(
     },
     #' @method binDist This \bold{must} be extended.  Get the distribution of simulations of the data within fixed bins.
     #' @param cutoffs A numeric vector with elements to use as the dividing values for the bins.
-    #' @return a FrameData.
-    binDist = function(cutoffs){
+    #' @param include.lowest logical, indicating if an x[i] equal to the lowest (or highest, for right = FALSE) breaks value should be included.
+    #' @param right logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa.
+    #' @return an ArrayData.
+    binDist = function(cutoffs,include.lowest = FALSE, right = TRUE){
       private$defaultAbstract()
     }
   ),
@@ -130,16 +132,34 @@ SimulatedForecast <- R6Class(
     },
     #' @method binDist Get the distribution of simulations of the data within fixed bins.
     #' @param cutoffs A numeric vector with elements to use as the dividing values for the bins.
-    #' @return a FrameData.
-    binDist = function(cutoffs){
-      SimulatedIncidenceMatrix$new(
-        lapply(
-          cutoffs,
-          function(cutoff){
-            self$data$summarize(function(x){ecdf(x)(cutoff)})
-          }
-        )
-      )
+    #' @param include.lowest logical, indicating if an x[i] equal to the lowest (or highest, for right = FALSE) breaks value should be included.
+    #' @param right logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa.
+    #' @return an ArrayData.
+    binDist = function(cutoffs,include.lowest = FALSE, right = TRUE){
+      if('binDist' %in% private$.debug){browser()}
+      data <- aperm(
+            apply(
+              self$data$arr,
+              c(1,2),
+              function(x){
+                  table(cut(
+                      x=x,
+                      breaks=cutoffs,
+                      include.lowest=include.lowest,
+                      right=right
+                  ))/length(x)
+              }
+            ),
+            c(2,3,1)
+          )
+      dimnames(data)[[1]] <- self$data$rnames
+      dimnames(data)[[2]] <- self$data$cnames
+      dimnames(data)[[3]] <- paste("[",cutoffs[-length(cutoffs)],",",cutoffs[-1],")",sep='')
+      rc <- SimulatedIncidenceMatrix$new( data)
+      rc$rowData <- self$data$rowData
+      rc$colData <- self$data$colData
+      rc$dimData[[3]] <- list(start=cutoffs[-length(cutoffs)],end=cutoffs[-1])
+      return(rc)
     }
   ),
   active = list(

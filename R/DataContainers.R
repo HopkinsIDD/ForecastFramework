@@ -139,11 +139,7 @@ MatrixData <- R6Class(
       if('rnames' %in% private$.debug){
         browser()
       }
-      if(missing(value)){
-        return(private$.rnames)
-      }
-      ##We could allow modifing the row names directly...
-      stop("Do not modify the row names directly")
+      private$defaultActive('.rnames','private',value)
     },
     #' @field cnames The names of columns in the data.
     cnames = function(value){
@@ -151,11 +147,7 @@ MatrixData <- R6Class(
       if('cnames' %in% private$.debug){
         browser()
       }
-      if(missing(value)){
-        return(private$.cnames)
-      }
-      ##We could allow modifing the column names directly...
-      stop("Do not modify the column names directly")
+      private$defaultActive('.cnames','private',value)
     },
     #' @field mat This is the matrix.  For extensibility, it cannot be written to directly and must be modified through methods.
     mat = function(value){
