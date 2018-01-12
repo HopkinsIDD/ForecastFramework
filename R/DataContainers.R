@@ -260,7 +260,12 @@ AbstractIncidenceMatrix <- R6Class(
       if('rnames' %in% private$.debug){
         browser()
       }
-      private$defaultActive('.rnames','private',value)
+      if(missing(value)){return(private$.rnames)}
+      if(length(value) != private$.nrow){
+        stop("Row names must be the same length as number of rows")
+      }
+      rownames(private$.mat) = value
+      private$.rnames = value
     },
     #' @field cnames The names of columns in the data.
     cnames = function(value){
@@ -268,7 +273,12 @@ AbstractIncidenceMatrix <- R6Class(
       if('cnames' %in% private$.debug){
         browser()
       }
-      private$defaultActive('.cnames','private',value)
+      if(missing(value)){return(private$.cnames)}
+      if(length(value) != private$.ncol){
+        stop("Column names must be the same length as number of columns")
+      }
+      colnames(private$.mat) = value
+      private$.cnames = value
     }
   )
 )
