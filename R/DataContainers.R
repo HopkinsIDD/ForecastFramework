@@ -631,21 +631,7 @@ AbstractSimulatedIncidenceMatrix <- R6Class(
     simulations = function(value){
       private$defaultActive('.arr','private',value)
     },
-    #' @field rnames The names of rows in the data.
-    rnames = function(value){
-      ## for debugging: see AbstractClasses::Generic::debug for details.
-      if(!missing(value)){self$dnames[[1]] <- value}
-      return(private$.dnames[[1]])
-    },
-    #' @field cnames The names of columns in the data.
-    cnames = function(value){
-      ## for debugging: see AbstractClasses::Generic::debug for details.
-      if('cnames' %in% private$.debug){
-        browser()
-      }
-      if(!missing(value)){self$dnames[[2]] <- value}
-      return(private$.dnames[[2]])
-    },
+    #' @field dnames The names of dimensions of the data.
     dnames = function(value){
       if('dnames' %in% private$.debug){
         browser()
