@@ -152,8 +152,12 @@ SimulatedForecast <- R6Class(
             ),
             c(2,3,1)
           )
-      dimnames(data)[[1]] <- self$data$rnames
-      dimnames(data)[[2]] <- self$data$cnames
+      if(!is.null(self$data$rnames)){
+        dimnames(data)[[1]] <- self$data$rnames
+      }
+      if(!is.null(self$data$cnames)){
+        dimnames(data)[[2]] <- self$data$cnames
+      }
       dimnames(data)[[3]] <- paste("[",cutoffs[-length(cutoffs)],",",cutoffs[-1],")",sep='')
       rc <- SimulatedIncidenceMatrix$new( data)
       rc$rowData <- self$data$rowData
