@@ -139,7 +139,8 @@ MatrixData <- R6Class(
       if('rnames' %in% private$.debug){
         browser()
       }
-      private$defaultActive('.rnames','private',value)
+      if(!missing(value)){stop("Do not write directly to the row names")}
+      return(private$.rnames)
     },
     #' @field cnames The names of columns in the data.
     cnames = function(value){
@@ -147,7 +148,8 @@ MatrixData <- R6Class(
       if('cnames' %in% private$.debug){
         browser()
       }
-      private$defaultActive('.cnames','private',value)
+      if(!missing(value)){stop("Do not write directly to the column names")}
+      return(private$.cnames)
     },
     #' @field mat This is the matrix.  For extensibility, it cannot be written to directly and must be modified through methods.
     mat = function(value){
@@ -249,6 +251,24 @@ AbstractIncidenceMatrix <- R6Class(
     mutate = function(rows,cols,data){
       ## AbstractClasses.R::Generic::defaultAbstract
       private$defaultAbstract()
+    }
+  ),
+  active = list(
+    #' @field rnames The names of rows in the data.
+    rnames = function(value){
+      ## for debugging: see AbstractClasses::Generic::debug for details.
+      if('rnames' %in% private$.debug){
+        browser()
+      }
+      private$defaultActive('.rnames','private',value)
+    },
+    #' @field cnames The names of columns in the data.
+    cnames = function(value){
+      ## for debugging: see AbstractClasses::Generic::debug for details.
+      if('cnames' %in% private$.debug){
+        browser()
+      }
+      private$defaultActive('.cnames','private',value)
     }
   )
 )
