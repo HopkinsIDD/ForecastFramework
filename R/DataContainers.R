@@ -389,8 +389,6 @@ ArrayData <- R6Class(
     	} else{
     		warning("The binding has come undone.")
     	}
-      ##We could allow modifing the row names directly...
-      stop("Do not modify the column names directly")
     },
     #' @field cnames The names of columns in the data.
     cnames = function(value){
