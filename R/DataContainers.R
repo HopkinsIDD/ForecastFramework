@@ -99,13 +99,13 @@ MatrixData <- R6Class(
       private$defaultActive('.rowData','private',value)
     },
     #' @field cellData A list of metadata associated with the cells of the data.
-    # cellData = function(value){
-    #   ## AbstractClasses.R::Generic::defaultActive
-    #   if(missing(value)){
-    #     return(private$.cellData)
-    #   }
-    #   private$defaultAbstract()
-    # },
+    cellData = function(value){
+      ## AbstractClasses.R::Generic::defaultActive
+      if(missing(value)){
+        return(private$.cellData)
+      }
+      private$defaultAbstract()
+    },
     ##Change this so nrow and ncol cannot be written to directly
     #' @field nrow The number of rows in the data
     nrow = function(value){

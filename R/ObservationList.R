@@ -33,6 +33,7 @@ ObservationList<- R6Class(
     .aVal = '',
     .slice = 1,
     .aDimData = list(),
+    .aCellData= character(0),
     na.rm = FALSE,
     updateArray = function(na.rm = private$na.rm){
       if('updateArray' %in% private$.debug){
@@ -101,7 +102,7 @@ ObservationList<- R6Class(
       ## This should not fail when the dimData is NULL
       private$.dimData = mapply(dim=self$aDims,data=self$aDimData,function(dim,data){
         self$frame %>%
-          group_by_(dim) %>%
+          group_by_(.dots=dim) %>%
           self$aggregate() %>%
           ungroup() %>%
           select_(.dots=data) %>%
@@ -116,6 +117,21 @@ ObservationList<- R6Class(
           }
         })
       }
+      private$.cellData = lapply(
+        self$aCellData,
+        function(data){
+          self$frame %>%
+          #' @importFrom dplyr group_by_
+          group_by_(.dots=setNames(self$aDims,NULL)) %>%
+          self$aggregate() %>%
+          #' @importFrom dplyr ungroup
+          ungroup() %>%
+          #' @importFrom reshape2 acast
+          acast(as.formula(paste(self$aDims,collapse='~')),value.var=data) %>%
+          return
+        }
+      )
+      names(private$.cellData) <- self$aCellData
       private$aCurrent <- TRUE
     }
   ),
@@ -156,7 +172,8 @@ ObservationList<- R6Class(
             rename_(.dots=setNames('unique',paste(private$.aVal,'_unique',sep=''))) ->
             input_data
         }
-        column_names = c(unlist(sapply(private$.aDimData,function(x){paste(x,"_unique",sep='')})),paste(private$.aVal,'_sum',sep=''))
+        column_names = c(unlist(sapply(private$.aDimData,function(x){paste(x,"_unique",sep='')})),paste(private$.aVal,'_sum',sep=''),paste(private$.aCellData,'_unique',sep=''))
+        names(column_names) <- column_names
         column_names = column_names[column_names %in% names(input_data)]
         input_data %>%
           select_(.dots=column_names) ->
@@ -184,7 +201,7 @@ ObservationList<- R6Class(
     #' @param val The attribute of frame to use for the values of the array (must \code{aggregate}_ to a numeric type)
     #' @param dimData A list containing for each dimension of the array, the attribute(s) of \code{frame} which are associated with that dimension.
     #' @param metaData The attribute(s) of frame to store in metaData so they can be accessed by methods expecting a MatrixData object.
-    formArray = function(...,val,dimData=list(),metaData=list()){
+    formArray = function(...,val,dimData=list(),metaData=list(),cellData = list()){
       if('formArray' %in% private$.debug){
         browser()
       }
@@ -200,6 +217,7 @@ ObservationList<- R6Class(
       self$aDims = list(...)
       self$aVal = val
       self$aDimData = dimData
+      self$aCellData = cellData
       ## This next line should be fixed at some point.  All of the other fields
       ##   reset on a new formArray call, but this one doesn't.
       metaDataKeys = names(private$.metaData)[!(names(private$.metaData) %in% names(metaData))]
@@ -398,6 +416,19 @@ ObservationList<- R6Class(
       #super$rowData <- value
       self$dimData[[1]] <- value
     },
+    #' @field cellData A list of data associated to the cells of \code{self$arr}
+    cellData = function(value){
+      if('cellData' %in% private$.debug){
+       browser()
+      }
+      if(missing(value)){
+        if(private$aCurrent == FALSE){
+          private$updateArray()
+        }
+        return(private$.cellData)
+      }
+      stop("Do not write directly to the cell data.  Modify the frame instead")
+    },
     #' @field aDims  Variable which stores the column names of \code{self$frame} defining each dimension of \code{self$arr}
     aDims = function(value){
       if('aDims' %in% private$.debug){
@@ -426,6 +457,24 @@ ObservationList<- R6Class(
         stop(paste(value,"is not a column of the frame"))
       }
       private$.aVal = value
+      private$aCurrent = FALSE
+    },
+    #' @field aCellData Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.
+    aCellData = function(value){
+      if('aCellData' %in% private$.debug){
+        browser()
+      }
+      if(missing(value)){
+        return(private$.aCellData)
+      }
+      lapply(value,function(value){
+        for(val in value){
+          if(!(val %in% colnames(private$.frame))){
+            stop(paste(val,"is not a column of the frame"))
+          }
+        }
+      })
+      private$.aCellData= value
       private$aCurrent = FALSE
     },
     #' @field aDimData Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.
@@ -458,7 +507,7 @@ ObservationList<- R6Class(
         if(private$.ndim == 2){
           return(as.matrix(private$.arr))
         }
-        return(apply(private$.arr,c(1,2),function(x){x[slice]}))
+        return(apply(private$.arr,c(1,2),function(x){x[private$.slice]}))
       }
       stop("Do not write directly to the mat, because it is automatically calculated.  The Observation List is called frame")
     },

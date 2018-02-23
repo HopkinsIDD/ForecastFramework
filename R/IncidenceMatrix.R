@@ -31,7 +31,7 @@ IncidenceMatrix <- R6Class(
     #' @param colData A list of metadata information associated with the columns of the matrix.
     ## Note when its decided exactly what the cellData are, they should be updated in the documentation.
     #' @param cellData A list of metadata information associated with the elements of the matrix.
-    initialize = function(data=matrix(),metaData=list(),rowData=list(),colData=list()){
+    initialize = function(data=matrix(),metaData=list(),rowData=list(),colData=list(),cellData = list()){
       ##We take in two types of input data:
       ##matrix Data
       ##MatrixData object Data
@@ -103,14 +103,15 @@ IncidenceMatrix <- R6Class(
         ##For these, we can use the active bindings.
         ##The active bindings will do most of the work here.
         self$rowData <- rowData
+        self$cellData <- cellData
         self$colData <- colData
         self$metaData <- metaData
       }
     },
     #' @method subset Select the data corresponding to the rows \code{rows} and the columns \code{columns}.  \code{rows} and \code{columns} can be either numeric or named indices.
-    #' @param rows An row index or list of row indices which can be either numeric or named."
-    #' @param cols An column index or list of column indices which can be either numeric or named."
-    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing."
+    #' @param rows An row index or list of row indices which can be either numeric or named.
+    #' @param cols An column index or list of column indices which can be either numeric or named.
+    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing.
     #' @return If \code{mutate=FALSE}, a clone of this object will run the method and be returned.  Otherwise, there is no return.
     subset = function(rows,cols,mutate=TRUE){
       ##for debugging: see AbstractClasses::Generic::debug for details.
@@ -138,6 +139,9 @@ IncidenceMatrix <- R6Class(
           ##Without the previous if statement, this loop would be nonempty when length(private$.colData) == 0, which is bad
           lapply(private$.colData,function(x){x[cols,drop=FALSE]}) -> private$.colData
         }
+        if(length(private$.cellData) > 0){
+          lapply(private$.cellData,function(x){x[,cols,drop=FALSE]}) -> private$.cellData
+        }
       }
       else if(missing(cols)){
         ##Keep all columns, select a subset of rows.
@@ -148,6 +152,9 @@ IncidenceMatrix <- R6Class(
         ##This if statement is necessary for dealing with the fact that 1:0 in R is non-empty.
         if(length(private$.rowData) > 0){
           lapply(private$.rowData,function(x){x[rows,drop=FALSE]}) -> private$.rowData
+        }
+        if(length(private$.cellData) > 0){
+          lapply(private$.cellData,function(x){x[rows,,drop=FALSE]}) -> private$.cellData
         }
       }
       else{
@@ -168,6 +175,9 @@ IncidenceMatrix <- R6Class(
           ##	private$.colData[[i]] = private$.colData[[i]][cols,drop=FALSE]
           ##}
         }
+        if(length(private$.cellData) > 0){
+          lapply(private$.cellData,function(x){x[rows,cols,drop=FALSE]}) -> private$.cellData
+        }
       }
       private$.nrow = nrow(private$.mat)
       private$.rnames = rownames(private$.mat)
@@ -178,9 +188,9 @@ IncidenceMatrix <- R6Class(
     #' @method head Select the last \code{k} slices of the data in dimension \code{direction}.
     #' @param k The number of slices to keep.
     #' @param direction The dimension to take a subset of. 1 for row, 2 for column.
-    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing."
+    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing.
     #' @return If \code{mutate=FALSE}, a clone of this object will run the method and be returned.  Otherwise, there is no return.
-    head = function(k,direction=2){
+    head = function(k,direction=2,mutate=TRUE){
       ##TODO: Consider only taking the time head...
       ##for debugging: see AbstractClasses::Generic::debug for deheads.
       if('head' %in% private$.debug){
@@ -194,41 +204,20 @@ IncidenceMatrix <- R6Class(
       indices = 1:k
       ##The indexing code changes based on direction
       if(direction==1){
-        ##rows
-        ##This is the part where we actually do the head
-        private$.mat = self$mat[indices,,drop=FALSE]
-        ##We also deal with the metadata
-        if(length(private$.rowData)>0){
-          for(i in 1:length(private$.rowData)){
-            private$.rowData[[i]] = private$.rowData[[i]][indices,drop=FALSE]
-          }
-        }
-      }
-      else if(direction==2){
-        ##columns
-        ##This is the part where we actually do the head
-        private$.mat = self$mat[,indices,drop=FALSE]
-        ##We also deal with the metadata
-        if(length(private$.colData)>0){
-          for(i in 1:length(private$.colData)){
-            private$.colData[[i]] = private$.colData[[i]][indices,drop=FALSE]
-          }
-        }
+        return(self$subset(rows=indices,mutate=mutate))
+      } else if(direction==2){
+        return(self$subset(cols=indices,mutate=mutate))
       }
       else{
         stop("This direction is not allowed.")
       }
-      private$.nrow = nrow(private$.mat)
-      private$.ncol = ncol(private$.mat)
-      private$.cnames = colnames(private$.mat)
-      private$.rnames = rownames(private$.mat)
     },
     #' @method tail Select the last \code{k} slices of the data in dimension \code{direction}.
     #' @param k The number of slices to keep.
     #' @param direction The dimension to take a subset of. 1 for row, 2 for column.
-    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing."
+    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing.
     #' @return If \code{mutate=FALSE}, a clone of this object will run the method and be returned.  Otherwise, there is no return.
-    tail = function(k,direction=2){
+    tail = function(k,direction=2,mutate=TRUE){
       ##TODO: Consider only taking the time tail...
       ##for debugging: see AbstractClasses::Generic::debug for details.
       if('tail' %in% private$.debug){
@@ -242,38 +231,16 @@ IncidenceMatrix <- R6Class(
       indices = (dim(self$mat)[[direction]]-k+1):dim(self$mat)[[direction]]
       ##The indexing code changes based on direction
       if(direction==1){
-        ##rows
-        ##This is the part where we actually do the tail
-        private$.mat = self$mat[indices,,drop=FALSE]
-        ##We also deal with the metadata
-        if(length(private$.rowData)>0){
-          for(i in 1:length(private$.rowData)){
-            private$.rowData[[i]] = private$.rowData[[i]][indices,drop=FALSE]
-          }
-        }
-      }
-      else if(direction==2){
-        ##columns
-        ##This is the part where we actually do the tail
-        private$.mat = self$mat[,indices,drop=FALSE]
-        ##We also deal with the metadata
-        if(length(private$.colData)>0){
-          for(i in 1:length(private$.colData)){
-            private$.colData[[i]] = private$.colData[[i]][indices,drop=FALSE]
-          }
-        }
-      }
-      else{
+        return(self$subset(rows = indices,mutate = mutate))
+      } else if(direction==2){
+        return(self$subset(cols = indices,mutate = mutate))
+      } else{
         stop("This direction is not allowed.")
       }
-      private$.nrow = nrow(private$.mat)
-      private$.ncol = ncol(private$.mat)
-      private$.cnames = colnames(private$.mat)
-      private$.rnames = rownames(private$.mat)
     },
     #' @method lag This function replaces the current matrix with a new matrix with one  column for every column, and a row for every row/index combination.  The column corresponding to the row and index will have the value of the  original matrix in the same row, but index columns previous.  This  shift will introduce NAs where it passes off the end of the matrix.
     #' @param indices A sequence of lags to use as part of the data.  Note that unless this list contains 0, the data will all be shifted back by at least one year.
-    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing."
+    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing.
     #' @return If \code{mutate=FALSE}, a clone of this object will run the method and be returned.  Otherwise, there is no return.
     #' @param na.rm Whether to remove NA values generated by walking off the edge of the matrix.
     lag = function(indices,mutate=TRUE,na.rm=FALSE){
@@ -331,6 +298,26 @@ IncidenceMatrix <- R6Class(
           private$.rowData,
           function(x){
             c(unlist(recursive=FALSE,lapply(1:numLags,function(y){x})))
+          }
+        )
+      }
+      if(length(private$.cellData) > 0){
+        private$.cellData <- lapply(
+          private$.cellData,
+          function(x){
+            x <- 0+array(x,c(dim(self$mat),numLags))
+            ##For each lag, we need to actually shift the values back in time, and add NA where appropriate
+            for(lag in 1:numLags){
+              x[,(1+indices[[lag]]):self$ncol,lag] = x[,1:(self$ncol-indices[[lag]]),lag]
+              if(indices[[lag]] > 0){
+                x[,1:(indices[[lag]]),lag] = NA
+              }
+            }
+            ##We reshuffle the dimensions and collapse the 1st and 4th dimension
+            x = aperm(x,c(1,3,2))
+            ##Check to make sure this works
+            x = matrix(x,self$nrow*numLags,self$ncol)
+            return(x)
           }
         )
       }
@@ -409,7 +396,7 @@ IncidenceMatrix <- R6Class(
     ##This scale function is not ideal.  Hopefully, we will replace it soon.
     #' @method scale This function rescales each element of our object according to f
     #' @param f a function which takes in a number and outputs a rescaled version of that number
-    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing."
+    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing.
     #' @return If \code{mutate=FALSE}, a clone of this object will run the method and be returned.  Otherwise, there is no return.
     scale = function(f,mutate=TRUE){
       if('scale' %in% private$.debug){
@@ -426,7 +413,7 @@ IncidenceMatrix <- R6Class(
     },
     #' @method diff This function replaces the matrix value at column i with the difference. between the values at columns i and (i-lag).
     #' @param lag  How far back to diff.  Defaults to 1.
-    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing."
+    #' @param mutate Whether to change the original instance, or create a new one.  If FALSE, the instance performing the method will be left unchanged, and a modified copy will be returned.  If true, then the instance will modify itself and return nothing.
     #' @return If \code{mutate=FALSE}, a clone of this object will run the method and be returned.  Otherwise, there is no return.
     diff = function(lag = 1,mutate=TRUE){
       if('diff' %in% private$.debug){
@@ -558,7 +545,6 @@ IncidenceMatrix <- R6Class(
   active = list(
     #' @field mat This is the matrix.  For extensibility, it cannot be written to directly and must be modified through methods.
     mat = function(value){
-      "The matrix of data."
       if('mat' %in% private$.debug){
         browser()
       }
@@ -569,7 +555,6 @@ IncidenceMatrix <- R6Class(
     },
     #' @field colData A list of metadata associated with the columns of the data.
     colData = function(value){
-      "The metaData associated with column in the matrix"
       if('colData' %in% private$.debug){
         browser()
       }
@@ -610,7 +595,6 @@ IncidenceMatrix <- R6Class(
     },
     #' @field rowData A list of metadata associated with the columns of the data.
     rowData = function(value){
-      "The metaData associated with rows in the matrix"
       if('rowData' %in% private$.debug){
         browser()
       }
@@ -648,6 +632,133 @@ IncidenceMatrix <- R6Class(
           names(private$.rowData[[i]]) <- rownames(self$mat)
         }
       }
+    },
+    #' @field cellData A list of metadata associated with the cells of the data.
+    cellData = function(value){
+      ## AbstractClasses.R::Generic::defaultActive
+      if('cellData' %in% private$.debug){
+        browser()
+      }
+      if(missing(value)){
+        if(length(private$.cellData) > 0){
+          if(!all(sapply(
+            private$.cellData,
+            function(x){
+              all(dim(x) == c(self$nrow,self$ncol))
+            }
+          ))){
+            stop("If you edit the matrix, also edit the cell data")
+          }
+        }
+        return(private$.cellData)
+      }
+      if(class(value) != 'list'){
+        stop("cell metaData should be a list of matrices.")
+      }
+      if(length(value) > 0){
+        for(i in 1:length(value)){
+          ##make this work for matrices and dataframe like things
+          if(class(value[[i]]) != 'matrix'){
+            stop(paste('The ',i,'th element of cell metaData should be a matrix'))
+          }
+          if(nrow(value[[i]]) != private$.nrow){
+            stop(paste('The ',i,'th element of cell metaData does not have the right number of rows',sep=''))
+          }
+          if(ncol(value[[i]]) != private$.ncol){
+            stop(paste('The ',i,'th element of cell metaData does not have the right number of columns',sep=''))
+          }
+          if(length(dim(value[[i]])) != 2){
+          }
+        }
+      }
+      private$.cellData <- value
+      if(length(private$.cellData)>0){
+        for(i in 1:length(value)){
+          names(private$.cellData[[i]]) <- names(self$mat)
+        }
+      }
+    },
+    frame = function(value){
+      if('frame' %in% private$.debug){browser()}
+      if(!missing(value)){
+        stop("Do not write directly to the frame.  Adjust the matrix instead.")
+      }
+      #' @importFrom reshape2 melt
+      frame = melt(self$mat)
+      if(length(self$rowData) > 0){
+        for(idx in 1:length(self$rowData)){
+          #' @importFrom reshape2 melt
+          if(is.null(self$rnames)){
+            tmp_frame <- data.frame(Var1 = 1:self$nrow,stringsAsFactors=FALSE)
+          } else {
+            tmp_frame <- data.frame(Var1 = self$rnames,stringsAsFactors=FALSE)
+          }
+          tmp_frame$value = self$rowData[[idx]]
+          tmp_name = names(self$rowData)[idx]
+          if(is.na(tmp_name)){
+            tmp_name = idx
+          }
+          tmp_name = paste('RowData',tmp_name,sep='_')
+          names(tmp_frame)[names(tmp_frame)=='value'] = tmp_name
+          tmp_frame$Var1 = as(tmp_frame$Var1,class(frame$Var1))
+          #' @importFrom dplyr left_join
+          frame <- left_join(frame,tmp_frame,by=c('Var1'))
+          if(any(endsWith(names(frame),".x"))){
+            stop("Not yet written")
+          }
+        }
+      }
+      if(length(self$colData) > 0){
+        for(idx in 1:length(self$colData)){
+          #' @importFrom reshape2 melt
+          if(is.null(self$cnames)){
+            tmp_frame <- data.frame(Var2 = 1:self$ncol,stringsAsFactors=FALSE)
+          } else {
+            tmp_frame <- data.frame(Var2 = self$cnames,stringsAsFactors=FALSE)
+          }
+          tmp_frame$value = self$colData[[idx]]
+          tmp_name = names(self$colData)[idx]
+          if(is.na(tmp_name)){
+            tmp_name = idx
+          }
+          tmp_name = paste('ColData',tmp_name,sep='_')
+          names(tmp_frame)[names(tmp_frame)=='value'] = tmp_name
+          tmp_frame$Var2 = as(tmp_frame$Var2,class(frame$Var2))
+          #' @importFrom dplyr left_join
+          frame <- left_join(frame,tmp_frame,by=c('Var2'))
+          if(any(endsWith(names(frame),".x"))){
+            stop("Not yet written")
+          }
+        }
+      }
+      if(length(self$cellData) > 0){
+        for(idx in 1:length(self$cellData)){
+          #' @importFrom reshape2 melt
+          tmp_frame <- melt(self$cellData[[idx]])
+          tmp_name = names(self$cellData)[idx]
+          if(is.na(tmp_name)){
+            tmp_name = idx
+          }
+          tmp_name = paste('CellData',tmp_name,sep='_')
+          names(tmp_frame)[names(tmp_frame)=='value'] = tmp_name
+          #' @importFrom dplyr left_join
+          frame <- left_join(frame,tmp_frame,by=c('Var1','Var2'))
+          if(any(endsWith(names(frame),".x"))){
+            stop("Not yet written")
+          }
+        }
+      }
+      if(length(self$metaData) > 0){
+        for(idx in 1:length(self$metaData) ){
+          tmp_name = names(self$metaData)[idx]
+          if(is.na(tmp_name)){
+            tmp_name = idx
+          }
+          tmp_name = paste('MetaData',tmp_name,sep='_')
+          frame[[tmp_name]] = list(self$metaData[[idx]])
+        }
+      }
+      return(frame)
     }
   )
 )
