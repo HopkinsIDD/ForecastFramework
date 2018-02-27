@@ -476,11 +476,12 @@ SimulatedIncidenceMatrix <- R6Class(
 \section{Fields}{
 \describe{
 \item{arr}{This is the full array.  For extensibility, it cannot be written to directly and must be modified through methods.}
+\item{cellData}{A list of metadata associated with the cells of the data.}
 \item{cnames}{The names of columns in the data.}
 \item{colData}{A list of metadata associated with the columns of the data.}
 \item{dimData}{The data associated with each dimension of the array.}
 \item{dims}{The size of the array.}
-\item{dnames}{The size of the array.}
+\item{dnames}{The names of dimensions of the data.}
 \item{mat}{This is the matrix.  For extensibility, it cannot be written to directly and must be modified through methods.}
 \item{metaData}{Any data not part of the main data structure.}
 \item{ncol}{The number of columns in the data.}

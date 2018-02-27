@@ -19,8 +19,8 @@ is_same_AbsractObservationList_as = function(rhs){
 }
 
 test_AbstractObservationList = function(object,name,equivalence){
-  if(!('MatrixData' %in% class(object))){
-    warning("Object is not of the correct")
+  if(!('FrameData' %in% class(object))){
+    warning("Object is not of the correct class")
   }
 
   first_object = object$clone(TRUE)
@@ -29,5 +29,19 @@ test_AbstractObservationList = function(object,name,equivalence){
   test_that(paste(name,": Inherited Methods don't change object"),{
     equivalence(first_object)(object)
   })
-
+  
+  test_that(paste(name,"formArray works"),{
+    if(ncol(object$frame) < 3){
+      skip("frame needs at least 3 columns to form array")
+    }
+    tempObject = object$clone(TRUE)
+    expect_error({
+      ## Forming array from first two columns
+      rname = names(tempObject$frame)[1]
+      cname = names(tempObject$frame)[2]
+      vname = names(tempObject$frame)[2]
+      tempObject$formArray(rname,cname,val=vname)
+      IncidenceMatrix$new(tempObject)
+    },NA)
+  })
 }

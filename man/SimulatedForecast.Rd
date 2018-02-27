@@ -51,12 +51,14 @@ IncidenceForecast <- R6Class(
 \item{sample}{Draw a random sample from the possible model predictions.  Please see implementation of the data for the properties of the sampling.}
 }}
 \section{Methods}{
-\methodname{binDist(cutoffs)}{
+\methodname{binDist(cutoffs,include.lowest = FALSE,right = TRUE)}{
 Get the distribution of simulations of the data within fixed bins.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{cutoffs}{A numeric vector with elements to use as the dividing values for the bins.}
+\methoditem{include.lowest}{logical, indicating if an x[i] equal to the lowest (or highest, for right = FALSE) breaks value should be included.}
+\methoditem{right}{logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa.}
 }}
-\item{Value}{a FrameData.}
+\item{Value}{an ArrayData.}
 }}
 \methodname{debug(string)}{
 A function for debugging the methods of this class.  It calls the \link{browser} command.  In order for methods to opt into to debugging, they need to implement the following code at the beginning: if(<method_name> \%in\% private$.debug)\{browser()\}.  This method exists, because the debugger is not always intuitive when it comes to debugging R6 methods.
@@ -78,10 +80,11 @@ This method extracts the elementwise median of the forecast.  This function will
 }}
 \item{Value}{a MatrixData.}
 }}
-\methodname{quantile(alphas)}{
+\methodname{quantile(alphas,na.rm=FALSE)}{
 Get the cutoffs for each percentile in alphas.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{alphas}{A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for.}
+\methoditem{na.rm}{A boolean regarding whether to remove NA values before computing the quantiles.}
 }}
 \item{Value}{an ArrayData.}
 }}

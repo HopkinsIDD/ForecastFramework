@@ -62,10 +62,11 @@ This method returns the data.  It is included for compliance.
 }}
 \item{Value}{a MatrixData.}
 }}
-\methodname{quantile(alphas)}{
+\methodname{quantile(alphas,na.rm=FALSE)}{
 This throws an error.  This method is not meaningful for this data.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{alphas}{A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for.}
+\methoditem{na.rm}{A boolean regarding whether to remove NA values before computing the quantiles.}
 }}
 \item{Value}{an ArrayData.}
 }}

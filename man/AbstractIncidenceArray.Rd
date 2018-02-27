@@ -82,6 +82,7 @@ data$subset(1:2,1:2,1:2)
 \section{Fields}{
 \describe{
 \item{arr}{This is the full array.  For extensibility, it cannot be written to directly and must be modified through methods.}
+\item{cellData}{A list of metadata associated with the cells of the data.}
 \item{cnames}{The names of columns in the data.}
 \item{colData}{A list of metadata associated with the columns of the data.}
 \item{dimData}{The data associated with each dimension of the array.}

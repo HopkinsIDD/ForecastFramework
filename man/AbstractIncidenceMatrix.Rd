@@ -511,6 +511,7 @@ IncidenceMatrix <- R6Class(
 }
 \section{Fields}{
 \describe{
+\item{cellData}{A list of metadata associated with the cells of the data.}
 \item{cnames}{The names of columns in the data.}
 \item{colData}{A list of metadata associated with the columns of the data.}
 \item{mat}{This is the matrix.  For extensibility, it cannot be written to directly and must be modified through methods.}

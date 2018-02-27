@@ -27,11 +27,13 @@ data$rowData
 }
 \section{Fields}{
 \describe{
+\item{aCellData}{Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.}
 \item{aDimData}{Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.}
 \item{aDims}{ Variable which stores the column names of \code{self$frame} defining each dimension of \code{self$arr}}
 \item{aVal}{Variable which stores the column names of \code{self$frame} defining the values of self$arr}
 \item{aggregate}{A function used to aggregate elements of \code{self$frame} when it is grouped.  This function should take a single table as input, and summarize each relevant column when grouped.}
 \item{arr}{An array of aggregate data pulled from the frame.  See \code{formArray} for details}
+\item{cellData}{A list of data associated to the cells of \code{self$arr}}
 \item{cnames}{The names of the rows of \code{self$arr}}
 \item{colData}{A list of data associated to the columns of \code{self$arr}}
 \item{dimData}{A list of data associated with each dimension of \code{arr}}
@@ -53,7 +55,7 @@ A function for debugging the methods of this class.  It calls the \link{browser}
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{string}{The name(s) of methods to debug as a character vector}
 }}}}
-\methodname{formArray(...,val,dimData=list(),metaData=list())}{
+\methodname{formArray(...,val,dimData=list(),metaData=list(),cellData = list())}{
 In order to use an ObservationList as an ArrayData, you need to select which columns to use to form the dimensions of the array.  Optionally, you can also assign some of the columns to be associated with each dimension (or cell).  Note that \code{aggregate} is used to determine how to deal with multiple frame associated with a particular grouping.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{\dots}{Column names of columns which, in order should form the dimensions of the array}
