@@ -131,38 +131,70 @@ SimulatedForecast <- R6Class(
       )
     },
     #' @method binDist Get the distribution of simulations of the data within fixed bins.
-    #' @param cutoffs A numeric vector with elements to use as the dividing values for the bins.
+    #' @param cutoffs A numeric vector with elements to use as the dividing values for the bins.  -Inf, and Inf will be added automatically.
     #' @param include.lowest logical, indicating if an x[i] equal to the lowest (or highest, for right = FALSE) breaks value should be included.
     #' @param right logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa.
     #' @return an ArrayData.
     binDist = function(cutoffs,include.lowest = FALSE, right = TRUE){
       if('binDist' %in% private$.debug){browser()}
+      if(include.lowest | (right)){
+        warning("The interval names will not be correctly formatted")
+      }
+      cutoffs = sort(unique(c(cutoffs,-Inf,Inf)))
       data <- aperm(
-            apply(
-              self$data$arr,
-              c(1,2),
-              function(x){
-                  table(cut(
-                      x=x,
-                      breaks=cutoffs,
-                      include.lowest=include.lowest,
-                      right=right
-                  ))/length(x)
-              }
-            ),
-            c(2,3,1)
-          )
+        apply(
+          self$data$arr,
+          c(1,2),
+          function(x){
+            c(
+              table(cut(
+                x=x,
+                breaks=cutoffs,
+                include.lowest=include.lowest,
+                right=right
+              ))/length(x),
+              "NA"=sum(is.na(x))/length(x)
+            )
+          }
+        ),
+        c(2,3,1)
+      )
       if(!is.null(self$data$rnames)){
         dimnames(data)[[1]] <- self$data$rnames
       }
       if(!is.null(self$data$cnames)){
         dimnames(data)[[2]] <- self$data$cnames
       }
-      dimnames(data)[[3]] <- paste("[",cutoffs[-length(cutoffs)],",",cutoffs[-1],")",sep='')
+      dimnames(data)[[3]] <- c(paste("[",cutoffs[-length(cutoffs)],",",cutoffs[-1],")",sep=''),"NA")
+      ## Special name for the final box if include.lowest is false
+      dimnames(data)[[3]][length(cutoffs)-1] <- paste('[',cutoffs[length(cutoffs)-1], ",", cutoffs[length(cutoffs)-0],"]",sep='')
+      ## Even in the include.lowest=FALSE case, we want Inf/-Inf to get reported normally
+      if(!include.lowest){
+        tmp.data <- aperm(
+          apply(
+            self$data$arr,
+            c(1,2),
+            function(x){
+              table(cut(
+                x=x,
+                breaks=cutoffs,
+                include.lowest=TRUE,
+                right=right
+              ))/length(x)
+            }
+          ),
+          c(2,3,1)
+        )
+        if(!right){
+          data[,,length(cutoffs)-1] = tmp.data[,,length(cutoffs)-1]
+        } else {
+          data[,,1] = tmp.data[,,1]
+        }
+      }
       rc <- SimulatedIncidenceMatrix$new( data)
       rc$rowData <- self$data$rowData
       rc$colData <- self$data$colData
-      rc$dimData[[3]] <- list(start=cutoffs[-length(cutoffs)],end=cutoffs[-1])
+      rc$dimData[[3]] <- list(start=c(cutoffs[-length(cutoffs)],NA),end=c(cutoffs[-1],NA))
       return(rc)
     }
   ),
