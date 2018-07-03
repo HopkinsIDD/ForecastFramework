@@ -164,6 +164,7 @@ ObservationList<- R6Class(
           summarize_all(funs(
             sum = if(is.numeric(.) || is.logical(.)){sum(.,na.rm=private$na.rm)} else{NA},
             unique = if(length(unique(.))==1){unique(.)} else{list(unique(.))})) ->
+            # unique = if(length(unique(.))==1){unique(NA)} else{NA})) ->
           input_data
         input_data %>%
           group_by_(.dots=grouping) ->
