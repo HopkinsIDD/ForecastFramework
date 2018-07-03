@@ -122,7 +122,7 @@ foreach my $file (@files){
                     my $finished = 0;
                     $in_multiline_string = 1;
                   } else{
-                    die "There is a problem here...\n";
+                    die "There is a problem here 1...\n";
                   }
                 }
               } else{
@@ -233,7 +233,7 @@ foreach my $file (@files){
                   die "Function didn't finish line:\n$line\n";
                 }
               } else{
-                die "There is a problem here...\n$line\n";
+                die "There is a problem here 2...\n$line\n";
               }
             }
             $args =~ s/\(/(/g;

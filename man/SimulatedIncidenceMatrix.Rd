@@ -141,7 +141,7 @@ Compute the median over all simulations.
 }}
 \item{Value}{An IncidenceMatrix where return$mat is the elementwise median of self$arr}
 }}
-\methodname{mutate(rows,cols,data)}{
+\methodname{mutate(rows,cols,sims,data)}{
 This function changes the information stored in \code{self$simulations}
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{rows}{The rows to change.}

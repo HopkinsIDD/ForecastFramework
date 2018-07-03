@@ -10,7 +10,7 @@ Depends:
 Imports:
     abind,lubridate,dplyr,reshape2,magrittr
 Suggests:
-    testthat,ggplot2,knitr,rmarkdown,dtplyr,data.table,DAAG,R.utils
+    testthat,ggplot2,knitr,rmarkdown,dtplyr,data.table,DAAG
 Encoding: UTF-8
 License: GPL (>= 2)
 LazyData: true

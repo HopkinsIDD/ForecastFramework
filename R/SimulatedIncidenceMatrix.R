@@ -582,14 +582,14 @@ SimulatedIncidenceMatrix <- R6Class(
     #' @param rows The rows to change.
     #' @param cols The columns to change.
     #' @param data The data to change to.  Can be either array-like or matrix-like.  If its matrix-like it will overwrite all of the dimensions.
-    mutate = function(rows,cols,data){
+    mutate = function(rows,cols,sims,data){
       ##For debugging
       if('mutate' %in% private$.debug){
         browser()
       }
       ##Testing this:
-      tmpdata = data
-      tmpdata = array(data,self$dims)
+      # tmpdata = data
+      # tmpdata = array(data,self$dims)
       data = as.array(data)
 
       if(missing(rows)){
@@ -608,6 +608,9 @@ SimulatedIncidenceMatrix <- R6Class(
           rownames(private$.arr) = self$rnames
         }
       }
+      if(missing(sims)){
+        sims = 1:self$nsim
+      }
       ##Check the size of the data
       ##Make this work better...
       if(is.null(dim(data))){
@@ -624,14 +627,14 @@ SimulatedIncidenceMatrix <- R6Class(
       }
       if(length(dim(data)) == 3){
         ##The data is an array
-        if(dim(data)[[3]] == self$nsim){
+        if(dim(data)[[3]] == length(sims)){
           private$.arr[rows,cols,] = data
         } else if(dim(data)[[3]] == 1){
-          private$.arr[rows,cols,] = replicate(self$nsim,data)
+          private$.arr[rows,cols,] = replicate(length(sims),data)
         }
       }
       else{
-        private$.arr[rows,cols,] = replicate(self$nsim,data)
+        private$.arr[rows,cols,sims] = data
       }
     },
     #' @method summarize Apply a function to every simulation.

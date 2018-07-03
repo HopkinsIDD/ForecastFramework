@@ -142,7 +142,14 @@ ObservationList<- R6Class(
     #' @importFrom dplyr data_frame
     initialize = function(data=data_frame(),...){
     	#' @importFrom dplyr as_data_frame
-      self$frame <- as_data_frame(data)
+      if("FrameData" %in% class(data)){
+        self$frame = data$frame
+      } else if(!is.null(data$frame)){
+        self$frame <- data$frame
+      } else {
+        self$frame <- as_data_frame(data)
+      }
+     
       self$formArray(...)
       ## Note: We need to define aggregate here (instead of in the public list), because things defined in lists are locked, and we want users to be able to modify the .aggregate function
       private$.aggregate = function(input_data){
@@ -232,12 +239,16 @@ ObservationList<- R6Class(
       if('frame' %in% private$.debug){
         browser()
       }
-      private$aCurrent = FALSE
-      if(!missing(value)){
-        private$.rnames = NULL
-        private$.cnames = NULL
+      if(missing(value)){
+        return(private$.frame)
       }
-      private$defaultActive('.frame','private',value)
+      if(!is.data.frame(value)){
+        stop("The frame attribute must be a data frame")
+      }
+      private$aCurrent = FALSE
+      private$.frame = value
+      private$.rnames = NULL
+      private$.cnames = NULL
     },
     #' @field arr An array of aggregate data pulled from the frame.  See \code{formArray} for details
     arr = function(value){

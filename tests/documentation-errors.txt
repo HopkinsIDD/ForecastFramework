@@ -3,15 +3,18 @@ AbstractIncidenceMatrix
 AbstractObservationList
 AbstractRelationalTables
 AbstractSimulatedIncidenceMatrix
+AggregateForecastModel
 ArrayData
 DataContainer
 Forecast
+			 right is undocumented for method binDist
 ForecastModel
 FrameData
 Generic
 	Generic is undocumented
 IncidenceForecast
 IncidenceMatrix
+		Active binding frame from class IncidenceMatrix is not properly documented.
 MatrixData
 Model
 MoveAheadModel
@@ -20,4 +23,6 @@ RecursiveForecastModel
 RelationalData
 SimpleForecast
 SimulatedForecast
+			 right is undocumented for method binDist
 SimulatedIncidenceMatrix
+			sims is undocumented for method mutate

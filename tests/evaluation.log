@@ -2,7 +2,16 @@ Evaluating Testing
 	AbstractIncidenceArray has no tests.
 	Started examining tests of AbstractIncidenceMatrix
 		Looking for tests for each method/binding of AbstractIncidenceMatrix
+				No test for addColumns and cellData
+				No test for addRows and cellData
+				No test for diff and cellData
+				No test for head and cellData
+				No test for lag and cellData
+				No test for mutate and cellData
+				No test for scale and cellData
+				No test for subset and cellData
 				No test for subset and metaData
+				No test for tail and cellData
 		Finished Looking for tests for each method/binding of AbstractIncidenceMatrix
 	Finished examining tests of AbstractIncidenceMatrix
 	Started examining tests of AbstractObservationList
@@ -15,6 +24,7 @@ Evaluating Testing
 			No test for formArray.
 				No test for formArray and aggregate
 				No test for formArray and arr
+				No test for formArray and cellData
 				No test for formArray and cnames
 				No test for formArray and colData
 				No test for formArray and dimData
@@ -58,41 +68,49 @@ Evaluating Testing
 				No test for subsample and simulations
 				No test for summarize and simulations
 				No test for undebug and simulations
+				No test for addColumns and cellData
 				No test for addColumns and dimData
 				No test for addColumns and dims
 				No test for addColumns and dnames
 				No test for addColumns and ndim
 				No test for addColumns and sample
+				No test for addError and cellData
 				No test for addError and dimData
 				No test for addError and dims
 				No test for addError and dnames
 				No test for addError and ndim
 				No test for addError and sample
+				No test for addRows and cellData
 				No test for addRows and dimData
 				No test for addRows and dims
 				No test for addRows and dnames
 				No test for addRows and ndim
 				No test for addRows and sample
+				No test for diff and cellData
 				No test for diff and dimData
 				No test for diff and dims
 				No test for diff and dnames
 				No test for diff and ndim
 				No test for diff and sample
+				No test for head and cellData
 				No test for head and dimData
 				No test for head and dims
 				No test for head and dnames
 				No test for head and ndim
 				No test for head and sample
+				No test for lag and cellData
 				No test for lag and dimData
 				No test for lag and dims
 				No test for lag and dnames
 				No test for lag and ndim
 				No test for lag and sample
+				No test for mutate and cellData
 				No test for mutate and dimData
 				No test for mutate and dims
 				No test for mutate and dnames
 				No test for mutate and ndim
 				No test for mutate and sample
+				No test for scale and cellData
 				No test for scale and dimData
 				No test for scale and dims
 				No test for scale and dnames
@@ -100,6 +118,7 @@ Evaluating Testing
 				No test for scale and sample
 			No test for subsample.
 				No test for subsample and arr
+				No test for subsample and cellData
 				No test for subsample and cnames
 				No test for subsample and colData
 				No test for subsample and dimData
@@ -115,9 +134,11 @@ Evaluating Testing
 				No test for subsample and rowData
 				No test for subsample and sample
 				No test for subsample and simulations
+				No test for subset and cellData
 				No test for subset and dimData
 				No test for subset and sample
 				No test for summarize and arr
+				No test for summarize and cellData
 				No test for summarize and cnames
 				No test for summarize and colData
 				No test for summarize and dimData
@@ -133,6 +154,7 @@ Evaluating Testing
 				No test for summarize and rowData
 				No test for summarize and sample
 				No test for summarize and simulations
+				No test for tail and cellData
 				No test for tail and dimData
 				No test for tail and dims
 				No test for tail and dnames
@@ -140,6 +162,7 @@ Evaluating Testing
 				No test for tail and sample
 		Finished Looking for tests for each method/binding of AbstractSimulatedIncidenceMatrix
 	Finished examining tests of AbstractSimulatedIncidenceMatrix
+	AggregateForecastModel has no tests.
 	Started examining tests of ArrayData
 		Looking for tests for each method/binding of ArrayData
 				No test for debug and arr
@@ -255,6 +278,19 @@ Evaluating Testing
 		IncidenceMatrix has no testing function
 		IncidenceMatrix has no equivalence relation
 		Looking for tests for each method/binding of IncidenceMatrix
+				No test for addColumns and cellData
+				No test for addRows and cellData
+				No test for debug and cellData
+				No test for diff and cellData
+				No test for head and cellData
+				No test for initialize and cellData
+				No test for lag and cellData
+				No test for lead and cellData
+				No test for mutate and cellData
+				No test for scale and cellData
+				No test for subset and cellData
+				No test for tail and cellData
+				No test for undebug and cellData
 				No test for addColumns and colData
 				No test for addRows and colData
 				No test for debug and colData
@@ -268,6 +304,19 @@ Evaluating Testing
 				No test for subset and colData
 				No test for tail and colData
 				No test for undebug and colData
+				No test for addColumns and frame
+				No test for addRows and frame
+				No test for debug and frame
+				No test for diff and frame
+				No test for head and frame
+				No test for initialize and frame
+				No test for lag and frame
+				No test for lead and frame
+				No test for mutate and frame
+				No test for scale and frame
+				No test for subset and frame
+				No test for tail and frame
+				No test for undebug and frame
 				No test for addColumns and mat
 				No test for addRows and mat
 				No test for debug and mat
@@ -295,8 +344,10 @@ Evaluating Testing
 				No test for tail and rowData
 				No test for undebug and rowData
 			No test for initialize.
+				No test for initialize and cellData
 				No test for initialize and cnames
 				No test for initialize and colData
+				No test for initialize and frame
 				No test for initialize and mat
 				No test for initialize and metaData
 				No test for initialize and ncol
@@ -304,8 +355,10 @@ Evaluating Testing
 				No test for initialize and rnames
 				No test for initialize and rowData
 			No test for lead.
+				No test for lead and cellData
 				No test for lead and cnames
 				No test for lead and colData
+				No test for lead and frame
 				No test for lead and mat
 				No test for lead and metaData
 				No test for lead and ncol
@@ -316,6 +369,9 @@ Evaluating Testing
 	Finished examining tests of IncidenceMatrix
 	Started examining tests of MatrixData
 		Looking for tests for each method/binding of MatrixData
+				No test for debug and cellData
+				No test for initialize and cellData
+				No test for undebug and cellData
 				No test for debug and cnames
 				No test for initialize and cnames
 				No test for undebug and cnames
@@ -374,6 +430,10 @@ Evaluating Testing
 	Started examining tests of ObservationList
 		ObservationList has no testing function
 		Looking for tests for each method/binding of ObservationList
+				No test for debug and aCellData
+				No test for formArray and aCellData
+				No test for initialize and aCellData
+				No test for undebug and aCellData
 				No test for debug and aDimData
 				No test for formArray and aDimData
 				No test for initialize and aDimData
@@ -390,6 +450,10 @@ Evaluating Testing
 				No test for formArray and arr
 				No test for initialize and arr
 				No test for undebug and arr
+				No test for debug and cellData
+				No test for formArray and cellData
+				No test for initialize and cellData
+				No test for undebug and cellData
 				No test for debug and cnames
 				No test for formArray and cnames
 				No test for initialize and cnames
@@ -439,11 +503,13 @@ Evaluating Testing
 				No test for initialize and slice
 				No test for undebug and slice
 			No test for initialize.
+				No test for initialize and aCellData
 				No test for initialize and aDimData
 				No test for initialize and aDims
 				No test for initialize and aVal
 				No test for initialize and aggregate
 				No test for initialize and arr
+				No test for initialize and cellData
 				No test for initialize and cnames
 				No test for initialize and colData
 				No test for initialize and dimData
