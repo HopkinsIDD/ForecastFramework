@@ -45,6 +45,7 @@ data$mat
 \item{cellData}{A list of metadata associated with the cells of the data.}
 \item{cnames}{The names of columns in the data.}
 \item{colData}{A list of metadata associated with the columns of the data.}
+\item{frame}{A data.frame representation of the IncidenceMatrix.  The frame contains all rows/columns as rows of the data frame, and the rows, columns, values and all metadata types as columns.  This is similar to the melt function.}
 \item{mat}{This is the matrix.  For extensibility, it cannot be written to directly and must be modified through methods.}
 \item{metaData}{Any data not part of the main data structure.}
 \item{ncol}{The number of columns in the data.}

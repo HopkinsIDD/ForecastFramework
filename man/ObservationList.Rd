@@ -6,71 +6,47 @@
 \newcommand{\methoditem}{\emph{#1} \tab-\tab #2\cr}
 \newcommand{\methodname}{\subsection{#1}}
 \docType{class}
-\name{ObservationList}
-\alias{ObservationList}
-\title{ObservationList}
-\description{ObservationList is a class for recording instances of observations. If a matrix is wide form, these observations are in long form.}
+\name{ObservationList}
+\alias{ObservationList}
+\title{ObservationList}
+\description{ObservationList is a class for recording instances of observations. If a matrix is wide form, these observations are in long form.}
 \seealso{
-Inherits from : \code{\link{AbstractObservationList}}
-
-}
-\examples{
-require(dplyr)
-data = ObservationList$new(data.frame(x=1:10 \%\% 2,y=1:10 \%\% 3,z=1,w=1:10))
-data$frame
-data$formArray('x','y',val='z',dimData = list(list('w')))
-data$mat
-data$rowData
-data$aggregate = function(input_data)\{summarize_all(input_data,funs(mean(.)))\}
-data$mat
-data$rowData
 }
 \section{Fields}{
 \describe{
-\item{aCellData}{Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.}
-\item{aDimData}{Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.}
-\item{aDims}{ Variable which stores the column names of \code{self$frame} defining each dimension of \code{self$arr}}
-\item{aVal}{Variable which stores the column names of \code{self$frame} defining the values of self$arr}
-\item{aggregate}{A function used to aggregate elements of \code{self$frame} when it is grouped.  This function should take a single table as input, and summarize each relevant column when grouped.}
-\item{arr}{An array of aggregate data pulled from the frame.  See \code{formArray} for details}
-\item{cellData}{A list of data associated to the cells of \code{self$arr}}
-\item{cnames}{The names of the rows of \code{self$arr}}
-\item{colData}{A list of data associated to the columns of \code{self$arr}}
-\item{dimData}{A list of data associated with each dimension of \code{arr}}
-\item{dims}{The dimensions of \code{arr}}
-\item{dnames}{The names of the slices of each dimension of \code{self$arr}}
-\item{frame}{The data frame this object is responsible for.}
-\item{mat}{A matrix pulled from a cross section of \code{self$arr}}
-\item{metaData}{Any data not part of the main data structure.}
-\item{ncol}{The number of columns in \code{self$arr}}
-\item{ndim}{The number of dimensions of \code{arr}}
-\item{nrow}{The number of rows in \code{self$arr}}
-\item{rnames}{The names of the rows of \code{self$arr}}
-\item{rowData}{A list of data associated to the rows of \code{self$arr}}
-\item{slice}{Which slice of \code{self$arr} to look at for \code{self$mat}}
+\item{aCellData}{Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.}
+\item{aDimData}{Variable which stores the column names of \code{self$frame} associated with each dimension of \code{self$arr}, but not defining them.}
+\item{aDims}{ Variable which stores the column names of \code{self$frame} defining each dimension of \code{self$arr}}
+\item{aVal}{Variable which stores the column names of \code{self$frame} defining the values of self$arr}
+\item{aggregate}{A function used to aggregate elements of \code{self$frame} when it is grouped.  This function should take a single table as input, and summarize each relevant column when grouped.}
+\item{arr}{An array of aggregate data pulled from the frame.  See \code{formArray} for details}
+\item{cellData}{A list of data associated to the cells of \code{self$arr}}
+\item{cnames}{The names of the rows of \code{self$arr}}
+\item{colData}{A list of data associated to the columns of \code{self$arr}}
+\item{dimData}{A list of data associated with each dimension of \code{arr}}
+\item{dims}{The dimensions of \code{arr}}
+\item{dnames}{The names of the slices of each dimension of \code{self$arr}}
+\item{frame}{The data frame this object is responsible for.}
+\item{mat}{A matrix pulled from a cross section of \code{self$arr}}
+\item{ncol}{The number of columns in \code{self$arr}}
+\item{ndim}{The number of dimensions of \code{arr}}
+\item{nrow}{The number of rows in \code{self$arr}}
+\item{rnames}{The names of the rows of \code{self$arr}}
+\item{rowData}{A list of data associated to the rows of \code{self$arr}}
+\item{slice}{Which slice of \code{self$arr} to look at for \code{self$mat}}
 }}
 \section{Methods}{
-\methodname{debug(string)}{
-A function for debugging the methods of this class.  It calls the \link{browser} command.  In order for methods to opt into to debugging, they need to implement the following code at the beginning: if(<method_name> \%in\% private$.debug)\{browser()\}.  This method exists, because the debugger is not always intuitive when it comes to debugging R6 methods.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of methods to debug as a character vector}
-}}}}
 \methodname{formArray(...,val,dimData=list(),metaData=list(),cellData = list())}{
 In order to use an ObservationList as an ArrayData, you need to select which columns to use to form the dimensions of the array.  Optionally, you can also assign some of the columns to be associated with each dimension (or cell).  Note that \code{aggregate} is used to determine how to deal with multiple frame associated with a particular grouping.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{\dots}{Column names of columns which, in order should form the dimensions of the array}
-\methoditem{val}{The attribute of frame to use for the values of the array (must \code{aggregate}_ to a numeric type)}
-\methoditem{dimData}{A list containing for each dimension of the array, the attribute(s) of \code{frame} which are associated with that dimension.}
+\methoditem{\dots}{Column names of columns which, in order should form the dimensions of the array}
+\methoditem{val}{The attribute of frame to use for the values of the array (must \code{aggregate}_ to a numeric type)}
+\methoditem{dimData}{A list containing for each dimension of the array, the attribute(s) of \code{frame} which are associated with that dimension.}
 }}}}
 \methodname{initialize(data=data_frame(),...)}{
 Create a new ObservationList with \code{frame} given by \code{data}
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{data}{A data frame to use as the frame of the ObservationList}
-\methoditem{\dots}{A list of arguments to pass to the formArray function.  These arguments determine how the ObservationList behaves as an ArrayData objec.}
-}}}}
-\methodname{undebug(string)}{
-A function for ceasing to debug methods.  Normally a method will call the \link{browser} command every time it is run.  This command will stop it from doing so.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of the methods to stop debugging.}
+\methoditem{data}{A data frame to use as the frame of the ObservationList}
+\methoditem{\dots}{A list of arguments to pass to the formArray function.  These arguments determine how the ObservationList behaves as an ArrayData objec.}
 }}}}
 }

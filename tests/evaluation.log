@@ -162,7 +162,6 @@ Evaluating Testing
 				No test for tail and sample
 		Finished Looking for tests for each method/binding of AbstractSimulatedIncidenceMatrix
 	Finished examining tests of AbstractSimulatedIncidenceMatrix
-	AggregateForecastModel has no tests.
 	Started examining tests of ArrayData
 		Looking for tests for each method/binding of ArrayData
 				No test for debug and arr
@@ -396,7 +395,6 @@ Evaluating Testing
 		Finished Looking for tests for each method/binding of MatrixData
 	Finished examining tests of MatrixData
 	Started examining tests of Model
-		Model does not test its inherited methods.
 		Looking for tests for each method/binding of Model
 			No test for fit.
 			No test for predict.
@@ -406,7 +404,6 @@ Evaluating Testing
 		MoveAheadModel has no testing function
 		MoveAheadModel has no equivalence relation
 		Looking for tests for each method/binding of MoveAheadModel
-				No test for debug and nsim
 				No test for fit and nsim
 				No test for fit_ and nsim
 				No test for forecast and nsim
@@ -419,7 +416,6 @@ Evaluating Testing
 				No test for prepareForecastData and nsim
 				No test for prepareOutputData and nsim
 				No test for preparePredictData and nsim
-				No test for undebug and nsim
 			No test for initialize.
 				No test for initialize and data
 				No test for initialize and maxPredCol
@@ -430,78 +426,67 @@ Evaluating Testing
 	Started examining tests of ObservationList
 		ObservationList has no testing function
 		Looking for tests for each method/binding of ObservationList
-				No test for debug and aCellData
 				No test for formArray and aCellData
 				No test for initialize and aCellData
-				No test for undebug and aCellData
-				No test for debug and aDimData
 				No test for formArray and aDimData
 				No test for initialize and aDimData
-				No test for undebug and aDimData
-				No test for debug and aDims
 				No test for formArray and aDims
 				No test for initialize and aDims
-				No test for undebug and aDims
-				No test for debug and aVal
 				No test for formArray and aVal
 				No test for initialize and aVal
-				No test for undebug and aVal
-				No test for debug and arr
+				No test for formArray and aggregate
+				No test for initialize and aggregate
 				No test for formArray and arr
 				No test for initialize and arr
-				No test for undebug and arr
-				No test for debug and cellData
 				No test for formArray and cellData
 				No test for initialize and cellData
-				No test for undebug and cellData
-				No test for debug and cnames
 				No test for formArray and cnames
 				No test for initialize and cnames
-				No test for undebug and cnames
-				No test for debug and colData
 				No test for formArray and colData
 				No test for initialize and colData
-				No test for undebug and colData
-				No test for debug and dimData
 				No test for formArray and dimData
 				No test for initialize and dimData
-				No test for undebug and dimData
-				No test for debug and dims
 				No test for formArray and dims
 				No test for initialize and dims
-				No test for undebug and dims
-				No test for debug and dnames
 				No test for formArray and dnames
 				No test for initialize and dnames
-				No test for undebug and dnames
-				No test for debug and mat
+				No test for formArray and frame
+				No test for initialize and frame
 				No test for formArray and mat
 				No test for initialize and mat
-				No test for undebug and mat
-				No test for debug and ncol
 				No test for formArray and ncol
 				No test for initialize and ncol
-				No test for undebug and ncol
-				No test for debug and ndim
 				No test for formArray and ndim
 				No test for initialize and ndim
-				No test for undebug and ndim
-				No test for debug and nrow
 				No test for formArray and nrow
 				No test for initialize and nrow
-				No test for undebug and nrow
-				No test for debug and rnames
 				No test for formArray and rnames
 				No test for initialize and rnames
-				No test for undebug and rnames
-				No test for debug and rowData
 				No test for formArray and rowData
 				No test for initialize and rowData
-				No test for undebug and rowData
-				No test for debug and slice
 				No test for formArray and slice
 				No test for initialize and slice
-				No test for undebug and slice
+			No test for formArray.
+				No test for formArray and aCellData
+				No test for formArray and aDimData
+				No test for formArray and aDims
+				No test for formArray and aVal
+				No test for formArray and aggregate
+				No test for formArray and arr
+				No test for formArray and cellData
+				No test for formArray and cnames
+				No test for formArray and colData
+				No test for formArray and dimData
+				No test for formArray and dims
+				No test for formArray and dnames
+				No test for formArray and frame
+				No test for formArray and mat
+				No test for formArray and ncol
+				No test for formArray and ndim
+				No test for formArray and nrow
+				No test for formArray and rnames
+				No test for formArray and rowData
+				No test for formArray and slice
 			No test for initialize.
 				No test for initialize and aCellData
 				No test for initialize and aDimData
@@ -517,7 +502,6 @@ Evaluating Testing
 				No test for initialize and dnames
 				No test for initialize and frame
 				No test for initialize and mat
-				No test for initialize and metaData
 				No test for initialize and ncol
 				No test for initialize and ndim
 				No test for initialize and nrow
@@ -528,11 +512,9 @@ Evaluating Testing
 	Finished examining tests of ObservationList
 	Started examining tests of RecursiveForecastModel
 		Looking for tests for each method/binding of RecursiveForecastModel
-				No test for debug and data
 				No test for fit and data
 				No test for fit_ and data
 				No test for forecast and data
-				No test for initialize and data
 				No test for predict and data
 				No test for predictRow and data
 				No test for predictRow_ and data
@@ -541,12 +523,9 @@ Evaluating Testing
 				No test for prepareForecastData and data
 				No test for prepareOutputData and data
 				No test for preparePredictData and data
-				No test for undebug and data
-				No test for debug and maxPredCol
 				No test for fit and maxPredCol
 				No test for fit_ and maxPredCol
 				No test for forecast and maxPredCol
-				No test for initialize and maxPredCol
 				No test for predict and maxPredCol
 				No test for predictRow and maxPredCol
 				No test for predictRow_ and maxPredCol
@@ -555,12 +534,9 @@ Evaluating Testing
 				No test for prepareForecastData and maxPredCol
 				No test for prepareOutputData and maxPredCol
 				No test for preparePredictData and maxPredCol
-				No test for undebug and maxPredCol
-				No test for debug and predCols
 				No test for fit and predCols
 				No test for fit_ and predCols
 				No test for forecast and predCols
-				No test for initialize and predCols
 				No test for predict and predCols
 				No test for predictRow and predCols
 				No test for predictRow_ and predCols
@@ -569,7 +545,6 @@ Evaluating Testing
 				No test for prepareForecastData and predCols
 				No test for prepareOutputData and predCols
 				No test for preparePredictData and predCols
-				No test for undebug and predCols
 			No test for fit.
 				No test for fit and data
 				No test for fit and maxPredCol
@@ -578,6 +553,10 @@ Evaluating Testing
 				No test for fit_ and data
 				No test for fit_ and maxPredCol
 				No test for fit_ and predCols
+			No test for forecast.
+				No test for forecast and data
+				No test for forecast and maxPredCol
+				No test for forecast and predCols
 			No test for predict.
 				No test for predict and data
 				No test for predict and maxPredCol

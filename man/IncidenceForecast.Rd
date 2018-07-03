@@ -43,11 +43,12 @@ forecast$quantile(c(.05,.5,.95))$arr
 \item{sample}{Draw a random sample from the possible model predictions.  Please see implementation of the data for the properties of the sampling.}
 }}
 \section{Methods}{
-\methodname{binDist(cutoffs,include.lowest = FALSE, right = TRUE)}{
+\methodname{binDist(cutoffs,include.lowest = FALSE,right = TRUE)}{
 Get the distribution of simulations of the data within fixed bins.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{cutoffs}{A numeric vector with elements to use as the dividing values for the bins.}
+\methoditem{cutoffs}{A numeric vector with elements to use as the dividing values for the bins.  -Inf, and Inf will be added automatically.}
 \methoditem{include.lowest}{logical, indicating if an x[i] equal to the lowest (or highest, for right = FALSE) breaks value should be included.}
+\methoditem{right}{logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa.}
 }}
 \item{Value}{an ArrayData.}
 }}

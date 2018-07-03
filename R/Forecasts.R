@@ -54,7 +54,7 @@ Forecast <- R6Class(
     #' @param include.lowest logical, indicating if an x[i] equal to the lowest (or highest, for right = FALSE) breaks value should be included.
     #' @param right logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa.
     #' @return an ArrayData.
-    binDist = function(cutoffs,include.lowest = FALSE, right = TRUE){
+    binDist = function(cutoffs,include.lowest = FALSE,right = TRUE){
       private$defaultAbstract()
     }
   ),
@@ -135,7 +135,7 @@ SimulatedForecast <- R6Class(
     #' @param include.lowest logical, indicating if an x[i] equal to the lowest (or highest, for right = FALSE) breaks value should be included.
     #' @param right logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa.
     #' @return an ArrayData.
-    binDist = function(cutoffs,include.lowest = FALSE, right = TRUE){
+    binDist = function(cutoffs,include.lowest = FALSE,right = TRUE){
       if('binDist' %in% private$.debug){browser()}
       if(include.lowest | (right)){
         warning("The interval names will not be correctly formatted")

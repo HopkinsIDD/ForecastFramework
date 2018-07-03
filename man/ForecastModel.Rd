@@ -6,81 +6,19 @@
 \newcommand{\methoditem}{\emph{#1} \tab-\tab #2\cr}
 \newcommand{\methodname}{\subsection{#1}}
 \docType{class}
-\name{ForecastModel}
-\alias{ForecastModel}
-\title{ForecastModel}
-\description{A model for predicting multiple time steps into the future.  You should extend this class if you are predicting over some future time period and none of the convenience classes which extend forecast are applicable.}
+\name{ForecastModel}
+\alias{ForecastModel}
+\title{ForecastModel}
+\description{A model for predicting multiple time steps into the future.  You should extend this class if you are predicting over some future time period and none of the convenience classes which extend forecast are applicable.}
 \seealso{
-Inherits from : \code{\link{Model}}
-
-Is inherited by : \code{\link{RecursiveForecastModel}}}
-\examples{
-Ar1Model <- R6Class(
-    inherit=ForecastModel,
-    private= list(
-        data = MatrixData$new(),
-        newdata = IncidenceMatrix$new(),
-        model = NULL
-    ),
-    public = list (
-        fit = function(data) \{
-            private$data = data$clone(TRUE)
-        \},
-        predict = function(newdata=private$data) \{
-            private$newdata = IncidenceMatrix$new(newdata)
-            private$newdata$lead(1)
-            
-            return(SimpleForecast$new(private$newdata))
-        \},
-        forecast = function(steps,newdata=private$data) \{
-            private$newdata = IncidenceMatrix$new(newdata)
-            if(steps >= private$newdata$ncol)
-              stop("Not enough columns.")
-            private$newdata$lead(steps)
-            private$newdata$subset(cols = 1:(private$newdata$ncol-steps))
-            return(SimpleForecast$new(private$newdata))
-        \}
-        
-    )
-)
-
-data = ObservationList$new(data.frame(x=1:1000 \%\% 3,y=1:1000 \%\% 10,z = 1:1000))
-data$formArray('x','y',val='z')
-model = Ar1Model$new()
-
 }
 \section{Methods}{
-\methodname{debug(string)}{
-A function for debugging the methods of this class.  It calls the \link{browser} command.  In order for methods to opt into to debugging, they need to implement the following code at the beginning: if(<method_name> \%in\% private$.debug)\{browser()\}.  This method exists, because the debugger is not always intuitive when it comes to debugging R6 methods.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of methods to debug as a character vector}
-}}}}
-\methodname{fit(data)}{
-This method \bold{must} be extended.  Get the model ready to predict.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{data}{The data to fit the model to.}
-}}}}
 \methodname{forecast(newdata,steps)}{
 This method \bold{must} be extended.  This function is similar to predict, in that it predicts the rows of the input data, however it can predict multiple timesteps into the future, instead of a single timestep.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{newdata}{The data to forecast from.}
-\methoditem{steps}{The number of timesteps into the future to predict.}
+\methoditem{newdata}{The data to forecast from.}
+\methoditem{steps}{The number of timesteps into the future to predict.}
 }}
-\item{Value}{A forecast}
+\item{Value}{A forecast}
 }}
-\methodname{initialize(...)}{
-This function \bold{should} be extended. Create a new instance of this class.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{\dots}{This function should take in any arguments just in case.}
-}}}}
-\methodname{predict(newdata)}{
-This method \bold{must} be extended.  Predict using the model
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{newdata}{the data to predict.}
-}}}}
-\methodname{undebug(string)}{
-A function for ceasing to debug methods.  Normally a method will call the \link{browser} command every time it is run.  This command will stop it from doing so.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of the methods to stop debugging.}
-}}}}
 }

@@ -13,7 +13,7 @@
 \seealso{
 Inherits from : \code{\link{ArrayData}}
 
-Is inherited by : \code{\link{SimulatedIncidenceMatrix}}}
+}
 \examples{
 SimulatedIncidenceMatrix <- R6Class(
   classname = "SimulatedIncidenceMatrix",

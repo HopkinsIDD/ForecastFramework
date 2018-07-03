@@ -13,7 +13,7 @@
 \seealso{
 Inherits from : \code{\link{FrameData}}
 
-Is inherited by : \code{\link{ObservationList}}}
+}
 \examples{
 require(dplyr)
 ObservationList<- R6Class(

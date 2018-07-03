@@ -6,75 +6,21 @@
 \newcommand{\methoditem}{\emph{#1} \tab-\tab #2\cr}
 \newcommand{\methodname}{\subsection{#1}}
 \docType{class}
-\name{Model}
-\alias{Model}
-\title{Model}
-\description{An abstract class for making predictions.  This class contains only what's necessary for data based modeling.  For the most part, the other model classes in this package are there to make extending this class easier.  You should extend this class directly if you are making a model which does not forecast, and none of the convenience classes seem appropriate.}
+\name{Model}
+\alias{Model}
+\title{Model}
+\description{An abstract class for making predictions.  This class contains only what's necessary for data based modeling.  For the most part, the other model classes in this package are there to make extending this class easier.  You should extend this class directly if you are making a model which does not forecast, and none of the convenience classes seem appropriate.}
 \seealso{
-Is inherited by : \code{\link{ForecastModel}}}
-\examples{
-SampleModel <- R6Class(
-  inherit = Model,
-  private = list(
-    data = MatrixData$new(),
-    model = NULL  ),
-  public = list(
-    fit = function(data)\{
-      private$data = IncidenceMatrix$new(data)
-      private$model =
-        glm(
-          as.formula("y ~ x"),
-          data = data.frame(
-            y=as.numeric(private$data$mat),
-            x=as.numeric(private$data$lag(1,mutate=FALSE)$mat)
-          )
-        )
-    \},
-    predict = function(newdata)\{
-      private$output = private$data$clone(TRUE)
-      forecastTimes = rep(FALSE,private$output$ncol)
-      private$output$addColumns(1)
-      forecastTimes = c(forecastTimes,TRUE)
-      private$output$mutate(
-        cols = private$output$ncol,
-        data=predict(
-          private$model,
-          newdata = data.frame(
-            x=private$output$mat[,private$output$ncol-1]
-          )
-        )
-      )
-      return(SimpleForecast$new(private$output,forecastTimes))
-    \},
-    initialize = function(...)\{
-    \}
-  )
-)
 }
 \section{Methods}{
-\methodname{debug(string)}{
-A function for debugging the methods of this class.  It calls the \link{browser} command.  In order for methods to opt into to debugging, they need to implement the following code at the beginning: if(<method_name> \%in\% private$.debug)\{browser()\}.  This method exists, because the debugger is not always intuitive when it comes to debugging R6 methods.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of methods to debug as a character vector}
-}}}}
 \methodname{fit(data)}{
 This method \bold{must} be extended.  Get the model ready to predict.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{data}{The data to fit the model to.}
-}}}}
-\methodname{initialize(...)}{
-This function \bold{should} be extended. Create a new instance of this class.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{\dots}{This function should take in any arguments just in case.}
+\methoditem{data}{The data to fit the model to.}
 }}}}
 \methodname{predict(newdata)}{
 This method \bold{must} be extended.  Predict using the model
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{newdata}{the data to predict.}
-}}}}
-\methodname{undebug(string)}{
-A function for ceasing to debug methods.  Normally a method will call the \link{browser} command every time it is run.  This command will stop it from doing so.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of the methods to stop debugging.}
+\methoditem{newdata}{the data to predict.}
 }}}}
 }

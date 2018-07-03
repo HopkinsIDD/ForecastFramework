@@ -91,21 +91,16 @@ MoveAheadModel <- R6Class(
 }
 \section{Fields}{
 \describe{
-\item{data}{A MatrixData containing the data used in fitting of the model.}
-\item{maxPredCol}{The farthest back column from the output value used in prediction.}
+\item{data}{A MatrixData containing the data used in fitting of the model.}
+\item{maxPredCol}{The farthest back column from the output value used in prediction.}
 \item{nsim}{The number of stochastic simulations to perform.}
-\item{predCols}{An array of which columns are used in prediction.  1 means the column before the prediction, 2 the one before that etc.}
+\item{predCols}{An array of which columns are used in prediction.  1 means the column before the prediction, 2 the one before that etc.}
 }}
 \section{Methods}{
-\methodname{debug(string)}{
-A function for debugging the methods of this class.  It calls the \link{browser} command.  In order for methods to opt into to debugging, they need to implement the following code at the beginning: if(<method_name> \%in\% private$.debug)\{browser()\}.  This method exists, because the debugger is not always intuitive when it comes to debugging R6 methods.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of methods to debug as a character vector}
-}}}}
 \methodname{fit(data)}{
 Fit the model for predicting.  This method breaks down the fitting  process into two parts, data preparation, and the model fitting.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{data}{The data to use to fit the model.  This object should be a  MatrixData object.}
+\methoditem{data}{The data to use to fit the model.  This object should be a  MatrixData object.}
 }}}}
 \methodname{fit_()}{
 This method is included for compliance with the standard but does nothing.  This model does not need to be fit.
@@ -114,13 +109,13 @@ This method is included for compliance with the standard but does nothing.  This
 \methodname{forecast(newdata,steps=1,stochastic='Poisson',nsims=self$nsim,addToData = FALSE)}{
 Using a model previously fit with \code{fit} to predict the next \code{steps} columns.  This function assumes that all of the data preprocessing has already been taken care of.  This function is similar to predict, except that it can predict multiple time steps into the future instead of a single timestep.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{newdata}{The data to forecast from.}
-\methoditem{steps}{The number of timesteps into the future to predict.}
-\methoditem{stochastic}{Treat the data as though drawn from a random  distribution, and recover the true value.  Can be used to calculate  confidence intervals, and investigate model sensitivity.}
-\methoditem{nsims}{The number of simulations to do if stochastic.}
-\methoditem{addToData}{Whether or not to mutate the data to incorporate the new predictions.}
+\methoditem{newdata}{The data to forecast from.}
+\methoditem{steps}{The number of timesteps into the future to predict.}
+\methoditem{stochastic}{Treat the data as though drawn from a random  distribution, and recover the true value.  Can be used to calculate  confidence intervals, and investigate model sensitivity.}
+\methoditem{nsims}{The number of simulations to do if stochastic.}
+\methoditem{addToData}{Whether or not to mutate the data to incorporate the new predictions.}
 }}
-\item{Value}{private$output This function should both modify and return private$output.}
+\item{Value}{private$output This function should both modify and return private$output.}
 }}
 \methodname{initialize(nsim = 3)}{
 Create a new MoveAheadModel
@@ -130,14 +125,14 @@ Create a new MoveAheadModel
 \methodname{predict(newdata)}{
 Use a model previously fit with fit to predict. This function does not assume any data preprocessing.  This function should not, in general need  to be overwritten by the user.  The main prediction function is predict_, so please modify that function instead if possible.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{newdata}{Optional.  The data used to predict.  This data should be a MatrixData object.}
+\methoditem{newdata}{Optional.  The data used to predict.  This data should be a MatrixData object.}
 }}}}
 \methodname{predictRow(newdata,row,col)}{
 Using a model previously fit with \code{fitRow} to predict the  \code{row}th row of the next column. This function does not assume any data preprocessing.  Since the predict method predicts every row at the  the same time, we include this method for predicting only a single row.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{newdata}{Optional.  The data use to predict.  This can either be a matrix, appropriately formatted lag vector, or NULL to predict based on the data used to fit.}
-\methoditem{row}{The row to predict the value of.}
-\methoditem{col}{This is for internal use only.}
+\methoditem{newdata}{Optional.  The data use to predict.  This can either be a matrix, appropriately formatted lag vector, or NULL to predict based on the data used to fit.}
+\methoditem{row}{The row to predict the value of.}
+\methoditem{col}{This is for internal use only.}
 }}}}
 \methodname{predictRow_(row,col=0)}{
 This method predicts a particular row.
@@ -170,10 +165,5 @@ This method prepares the output for predict or forecast.
 This method gets data ready to use to predict and stores it in the model for later use.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{newdata}{The data to use when fitting the model.}
-}}}}
-\methodname{undebug(string)}{
-A function for ceasing to debug methods.  Normally a method will call the \link{browser} command every time it is run.  This command will stop it from doing so.
-\describe{\item{\emph{Arguments}}{\tabular{lcl}{
-\methoditem{string}{The name(s) of the methods to stop debugging.}
 }}}}
 }

@@ -581,6 +581,7 @@ SimulatedIncidenceMatrix <- R6Class(
     #' @method mutate This function changes the information stored in \code{self$simulations}
     #' @param rows The rows to change.
     #' @param cols The columns to change.
+    #' @param sims Which simulations to affect.
     #' @param data The data to change to.  Can be either array-like or matrix-like.  If its matrix-like it will overwrite all of the dimensions.
     mutate = function(rows,cols,sims,data){
       ##For debugging

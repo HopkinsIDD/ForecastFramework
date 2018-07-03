@@ -678,6 +678,7 @@ IncidenceMatrix <- R6Class(
         }
       }
     },
+    #' @field frame A data.frame representation of the IncidenceMatrix.  The frame contains all rows/columns as rows of the data frame, and the rows, columns, values and all metadata types as columns.  This is similar to the melt function.
     frame = function(value){
       if('frame' %in% private$.debug){browser()}
       if(!missing(value)){
