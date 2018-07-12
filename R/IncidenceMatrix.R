@@ -540,6 +540,64 @@ IncidenceMatrix <- R6Class(
         ##The data is a matrix
         private$.mat[rows,cols] = data
       }
+    },
+    as_sts = function(
+      pop_name = 'pop',
+      freq_name = 'freq',
+      start_name = 'start',
+      epoch_name = 'epoch',
+      map_name = 'map',
+      neighbourhood_name = 'neighbourhood'
+    ){
+      
+      # local_pop = NULL
+      # if(pop_name %in% names(self$rowData)){
+      #   local_pop = self$rowData$pop
+      # }
+      # 
+      # local_freq = NULL
+      # if(freq_name %in% names(self$metaData)){
+      #   local_freq = self$metaData[[freq_name]]
+      # }
+      # 
+      # ## Consider adding another case for when 't' is defined but not one of the things below
+      # local_start = NULL
+      # if(start_name %in% names(self$metaData)){
+      #   local_start = self$metaData[[start_name]]
+      # } else if(start_name %in% names(self$colData)){
+      #   local_start = self$colData[[start_name]][1]
+      # }
+      # 
+      # 
+      # local_map = NULL
+      # if(map_name %in% names(self$rowData)){
+      #   #' @importFrom sf st_relate
+      #   local_map = self$rowData[[map_name]]
+      # }
+      # 
+      # local_neighbourhood = NULL
+      # if(neighbourhood_name %in% names(self$metaData)){
+      #   local_neighbourhood = self$metaData[[neighbourhood_name]]
+      # } else if(!missing(local_map)){
+      #   # sf_adjacency = st_relate(map,pattern = '****1****',sparse=FALSE)
+      #   # #' @importFrom igraph graph_from_adjacency_matrix
+      #   # sf_graph = graph_from_adjacency_matrix(sf_adjacency)
+      #   # #' @importFrom igraph distances
+      #   # self$metaData[[neighbourhood_name]] = igraph::distances(sf_graph)
+      #   # neighbourhood = self$metaData[[neighbourhood_name]]
+      # }
+      
+      ## Add more of these
+      #' @importFrom surveillance sts
+      return(sts(
+        observed = t(self$mat),
+        freq = self$metaData[[freq_name]],
+        epoch = self$colData[[epoch_name]],
+        start = self$metaData[[start_name]],
+        pop = self$rowData[[pop_name]],
+        neighbourhood = self$metaData[[neighbourhood_name]],
+        map = self$rowData[[map_name]]
+      ))
     }
   ),
   active = list(
@@ -574,16 +632,16 @@ IncidenceMatrix <- R6Class(
       if(length(value)>0){
         for(i in 1:length(value)){
           ##make this work for matrices and dataframe like things
-          if(Reduce('&&',class(value[[i]]) != c('list','character','numeric','integer','logical','raw','complex'))){
-            if(dim(as.matrix(value[[i]]))[[1]] != private$.ncol){
-              stop(paste('The ',i,'th element of column metaData does not have one element for each column.',sep=''))
-            }
-          }
-          else{
+          # if(Reduce('&&',class(value[[i]]) != c('list','character','numeric','integer','logical','raw','complex'))){
+          #   if(dim(as.matrix(value[[i]]))[[1]] != private$.ncol){
+          #     stop(paste('The ',i,'th element of column metaData does not have one element for each column.',sep=''))
+          #   }
+          # }
+          # else{
             if(length(value[[i]])!=private$.ncol){
               stop(paste('The ',i,'th element of column metaData does not have one element for each column.',sep=''))
             }
-          }
+          # }
         }
       }
       private$.colData <- value
@@ -614,16 +672,16 @@ IncidenceMatrix <- R6Class(
       if(length(value) > 0){
         for(i in 1:length(value)){
           ##make this work for matrices and dataframe like things
-          if(Reduce('&&',class(value[[i]]) != c('list','character','numeric','integer','logical','raw','complex'))){
-            if(dim(as.matrix(value[[i]]))[[1]] != private$.nrow){
-              stop(paste('The ',i,'th element of row metaData does not have one element for each row.',sep=''))
-            }
-          }
-          else{
+          # if(Reduce('&&',class(value[[i]]) != c('list','character','numeric','integer','logical','raw','complex'))){
+          #   if(dim(as.matrix(value[[i]]))[[1]] != private$.nrow){
+          #     stop(paste('The ',i,'th element of row metaData does not have one element for each row.',sep=''))
+          #   }
+          # }
+          # else{
             if(length(value[[i]])!=private$.nrow){
               stop(paste('The ',i,'th element of row metaData does not have one element for each row.',sep=''))
             }
-          }
+          # }
         }
       }
       private$.rowData <- value

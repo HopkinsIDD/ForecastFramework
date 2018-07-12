@@ -279,6 +279,7 @@ Evaluating Testing
 		Looking for tests for each method/binding of IncidenceMatrix
 				No test for addColumns and cellData
 				No test for addRows and cellData
+				No test for as_sts and cellData
 				No test for debug and cellData
 				No test for diff and cellData
 				No test for head and cellData
@@ -292,6 +293,7 @@ Evaluating Testing
 				No test for undebug and cellData
 				No test for addColumns and colData
 				No test for addRows and colData
+				No test for as_sts and colData
 				No test for debug and colData
 				No test for diff and colData
 				No test for head and colData
@@ -305,6 +307,7 @@ Evaluating Testing
 				No test for undebug and colData
 				No test for addColumns and frame
 				No test for addRows and frame
+				No test for as_sts and frame
 				No test for debug and frame
 				No test for diff and frame
 				No test for head and frame
@@ -318,6 +321,7 @@ Evaluating Testing
 				No test for undebug and frame
 				No test for addColumns and mat
 				No test for addRows and mat
+				No test for as_sts and mat
 				No test for debug and mat
 				No test for diff and mat
 				No test for head and mat
@@ -331,6 +335,7 @@ Evaluating Testing
 				No test for undebug and mat
 				No test for addColumns and rowData
 				No test for addRows and rowData
+				No test for as_sts and rowData
 				No test for debug and rowData
 				No test for diff and rowData
 				No test for head and rowData
@@ -342,6 +347,17 @@ Evaluating Testing
 				No test for subset and rowData
 				No test for tail and rowData
 				No test for undebug and rowData
+			No test for as_sts.
+				No test for as_sts and cellData
+				No test for as_sts and cnames
+				No test for as_sts and colData
+				No test for as_sts and frame
+				No test for as_sts and mat
+				No test for as_sts and metaData
+				No test for as_sts and ncol
+				No test for as_sts and nrow
+				No test for as_sts and rnames
+				No test for as_sts and rowData
 			No test for initialize.
 				No test for initialize and cellData
 				No test for initialize and cnames

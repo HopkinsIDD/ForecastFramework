@@ -12,6 +12,7 @@ Generic
 	Generic is undocumented
 IncidenceForecast
 IncidenceMatrix
+		IncidenceMatrix has undocumented method as_sts.
 MatrixData
 Model
 MoveAheadModel
