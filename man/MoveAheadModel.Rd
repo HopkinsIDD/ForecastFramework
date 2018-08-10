@@ -95,6 +95,7 @@ MoveAheadModel <- R6Class(
 \item{maxPredCol}{The farthest back column from the output value used in prediction.}
 \item{nsim}{The number of stochastic simulations to perform.}
 \item{predCols}{An array of which columns are used in prediction.  1 means the column before the prediction, 2 the one before that etc.}
+\item{stochastic}{A string with the family of stochastic noise to apply to the recursive process.  Currently only accepts 'Deterministic' and 'Poisson' as values.}
 }}
 \section{Methods}{
 \methodname{fit(data)}{
@@ -106,14 +107,11 @@ Fit the model for predicting.  This method breaks down the fitting  process into
 This method is included for compliance with the standard but does nothing.  This model does not need to be fit.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 }}}}
-\methodname{forecast(newdata,steps=1,stochastic='Poisson',nsims=self$nsim,addToData = FALSE)}{
+\methodname{forecast(newdata,steps=1)}{
 Using a model previously fit with \code{fit} to predict the next \code{steps} columns.  This function assumes that all of the data preprocessing has already been taken care of.  This function is similar to predict, except that it can predict multiple time steps into the future instead of a single timestep.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{newdata}{The data to forecast from.}
 \methoditem{steps}{The number of timesteps into the future to predict.}
-\methoditem{stochastic}{Treat the data as though drawn from a random  distribution, and recover the true value.  Can be used to calculate  confidence intervals, and investigate model sensitivity.}
-\methoditem{nsims}{The number of simulations to do if stochastic.}
-\methoditem{addToData}{Whether or not to mutate the data to incorporate the new predictions.}
 }}
 \item{Value}{private$output This function should both modify and return private$output.}
 }}

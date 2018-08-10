@@ -15,9 +15,8 @@ Inherits from : \code{\link{FrameData}}
 
 Is inherited by : \code{\link{AbstractRelationalTables}}}
 \examples{
-require(dplyr)
-require(reshape2)
-require(R.utils)
+library(dplyr)
+library(reshape2)
 SampleRelationalTables <- R6Class(
   inherit = AbstractRelationalTables,
   public = list(

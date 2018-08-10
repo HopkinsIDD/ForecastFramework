@@ -1,6 +1,5 @@
-require(dplyr)
-require(reshape2)
-require(R.utils)
+library(dplyr)
+library(reshape2)
 SampleRelationalTables <- R6Class(
   inherit = AbstractRelationalTables,
   public = list(

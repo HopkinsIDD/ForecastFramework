@@ -1,7 +1,10 @@
 Package: ForecastFramework
 Title: A Basis for Modular Model Creation
-Version: 0.9.0
-Authors@R: person("Joshua", "Kaminsky", email = "jkaminsky@jhu.edu", role = c("aut", "cre"))
+Version: 0.10.0
+Authors@R: c(
+  person("Joshua", "Kaminsky", email = "jkaminsky@jhu.edu", role = c("aut", "cre")),
+  person("Justin", "Lessler", email = "justin@jhu.edu", role = c("aut")),
+  person("Nicholas", "Reich", email = "nick@schoolph.umass.edu", role = c("aut")))
 Author: Joshua Kaminsky [aut, cre]
 Maintainer: Joshua Kaminsky <jkaminsky@jhu.edu>
 Description: Create modular models.  Quickly prototype models whose input includes (multiple) time series data.  Create pieces of model use cases separately, and swap out particular models as desired. Create modeling competitions, data processing pipelines, and re-useable models.
@@ -11,6 +14,8 @@ Imports:
     abind,lubridate,dplyr,reshape2,magrittr
 Suggests:
     testthat,ggplot2,knitr,rmarkdown,dtplyr,data.table,DAAG
+Enhances:
+    surveillance
 Encoding: UTF-8
 License: GPL (>= 2)
 LazyData: true

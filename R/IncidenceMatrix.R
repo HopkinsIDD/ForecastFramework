@@ -541,6 +541,14 @@ IncidenceMatrix <- R6Class(
         private$.mat[rows,cols] = data
       }
     },
+    #' @method as_sts Convert this object to an sts object with as much information as possible
+    #' @param pop_name string with the name of rowData to use as the population of the sts object.
+    #' @param freq_name string with the name of metaData to use as the frequency of the sts object.
+    #' @param start_name string with the name of metaData to use as the start of the sts object.
+    #' @param epoch_name string with the name of the colData to use as the epoch of the sts object.
+    #' @param map_name string with the name of the rowData to use as the map of the sts object.
+    #' @param neighbourhood_name string with the name of the rowData to use as the neighbourhood of th ests object.
+   
     as_sts = function(
       pop_name = 'pop',
       freq_name = 'freq',
@@ -549,47 +557,14 @@ IncidenceMatrix <- R6Class(
       map_name = 'map',
       neighbourhood_name = 'neighbourhood'
     ){
-      
-      # local_pop = NULL
-      # if(pop_name %in% names(self$rowData)){
-      #   local_pop = self$rowData$pop
-      # }
-      # 
-      # local_freq = NULL
-      # if(freq_name %in% names(self$metaData)){
-      #   local_freq = self$metaData[[freq_name]]
-      # }
-      # 
-      # ## Consider adding another case for when 't' is defined but not one of the things below
-      # local_start = NULL
-      # if(start_name %in% names(self$metaData)){
-      #   local_start = self$metaData[[start_name]]
-      # } else if(start_name %in% names(self$colData)){
-      #   local_start = self$colData[[start_name]][1]
-      # }
-      # 
-      # 
-      # local_map = NULL
-      # if(map_name %in% names(self$rowData)){
-      #   #' @importFrom sf st_relate
-      #   local_map = self$rowData[[map_name]]
-      # }
-      # 
-      # local_neighbourhood = NULL
-      # if(neighbourhood_name %in% names(self$metaData)){
-      #   local_neighbourhood = self$metaData[[neighbourhood_name]]
-      # } else if(!missing(local_map)){
-      #   # sf_adjacency = st_relate(map,pattern = '****1****',sparse=FALSE)
-      #   # #' @importFrom igraph graph_from_adjacency_matrix
-      #   # sf_graph = graph_from_adjacency_matrix(sf_adjacency)
-      #   # #' @importFrom igraph distances
-      #   # self$metaData[[neighbourhood_name]] = igraph::distances(sf_graph)
-      #   # neighbourhood = self$metaData[[neighbourhood_name]]
-      # }
-      
+      if('as_sts' %in% private$.debug()){
+        browser()
+      }
+      if(!('surveillance' %in% rownames(installed.packages()))){
+        stop("sts objects are part of the surveillance package.  Please install surveillance before continuing")
+      }
       ## Add more of these
-      #' @importFrom surveillance sts
-      return(sts(
+      return(surveillance::sts(
         observed = t(self$mat),
         freq = self$metaData[[freq_name]],
         epoch = self$colData[[epoch_name]],

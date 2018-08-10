@@ -103,6 +103,7 @@ ObservationList<- R6Class(
       private$.dimData = mapply(dim=self$aDims,data=self$aDimData,function(dim,data){
         self$frame %>%
           group_by_(.dots=dim) %>%
+          select_(.dots=data) %>%
           self$aggregate() %>%
           ungroup() %>%
           select_(.dots=data) %>%
@@ -152,7 +153,7 @@ ObservationList<- R6Class(
      
       self$formArray(...)
       ## Note: We need to define aggregate here (instead of in the public list), because things defined in lists are locked, and we want users to be able to modify the .aggregate function
-      private$.aggregate = function(input_data){
+      private$.aggregate = function(input_data,na.rm=private$na.rm){
         if('aggregate' %in% private$.debug){
           browser()
         }
@@ -162,7 +163,7 @@ ObservationList<- R6Class(
           #' @importFrom dplyr summarize_all
           #' @importFrom dplyr funs
           summarize_all(funs(
-            sum = if(is.numeric(.) || is.logical(.)){sum(.,na.rm=private$na.rm)} else{NA},
+            sum = if(is.numeric(.) || is.logical(.)){sum(.,na.rm=na.rm)} else{NA},
             unique = if(length(unique(.))==1){unique(.)} else{list(unique(.))})) ->
             # unique = if(length(unique(.))==1){unique(NA)} else{NA})) ->
           input_data

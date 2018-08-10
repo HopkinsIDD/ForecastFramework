@@ -437,6 +437,7 @@ Evaluating Testing
 				No test for initialize and maxPredCol
 				No test for initialize and nsim
 				No test for initialize and predCols
+				No test for initialize and stochastic
 		Finished Looking for tests for each method/binding of MoveAheadModel
 	Finished examining tests of MoveAheadModel
 	Started examining tests of ObservationList
@@ -561,50 +562,72 @@ Evaluating Testing
 				No test for prepareForecastData and predCols
 				No test for prepareOutputData and predCols
 				No test for preparePredictData and predCols
+				No test for fit and stochastic
+				No test for fit_ and stochastic
+				No test for forecast and stochastic
+				No test for predict and stochastic
+				No test for predictRow and stochastic
+				No test for predictRow_ and stochastic
+				No test for predict_ and stochastic
+				No test for prepareFitData and stochastic
+				No test for prepareForecastData and stochastic
+				No test for prepareOutputData and stochastic
+				No test for preparePredictData and stochastic
 			No test for fit.
 				No test for fit and data
 				No test for fit and maxPredCol
 				No test for fit and predCols
+				No test for fit and stochastic
 			No test for fit_.
 				No test for fit_ and data
 				No test for fit_ and maxPredCol
 				No test for fit_ and predCols
+				No test for fit_ and stochastic
 			No test for forecast.
 				No test for forecast and data
 				No test for forecast and maxPredCol
 				No test for forecast and predCols
+				No test for forecast and stochastic
 			No test for predict.
 				No test for predict and data
 				No test for predict and maxPredCol
 				No test for predict and predCols
+				No test for predict and stochastic
 			No test for predictRow.
 				No test for predictRow and data
 				No test for predictRow and maxPredCol
 				No test for predictRow and predCols
+				No test for predictRow and stochastic
 			No test for predictRow_.
 				No test for predictRow_ and data
 				No test for predictRow_ and maxPredCol
 				No test for predictRow_ and predCols
+				No test for predictRow_ and stochastic
 			No test for predict_.
 				No test for predict_ and data
 				No test for predict_ and maxPredCol
 				No test for predict_ and predCols
+				No test for predict_ and stochastic
 			No test for prepareFitData.
 				No test for prepareFitData and data
 				No test for prepareFitData and maxPredCol
 				No test for prepareFitData and predCols
+				No test for prepareFitData and stochastic
 			No test for prepareForecastData.
 				No test for prepareForecastData and data
 				No test for prepareForecastData and maxPredCol
 				No test for prepareForecastData and predCols
+				No test for prepareForecastData and stochastic
 			No test for prepareOutputData.
 				No test for prepareOutputData and data
 				No test for prepareOutputData and maxPredCol
 				No test for prepareOutputData and predCols
+				No test for prepareOutputData and stochastic
 			No test for preparePredictData.
 				No test for preparePredictData and data
 				No test for preparePredictData and maxPredCol
 				No test for preparePredictData and predCols
+				No test for preparePredictData and stochastic
 		Finished Looking for tests for each method/binding of RecursiveForecastModel
 	Finished examining tests of RecursiveForecastModel
 	RelationalData has no tests.

@@ -64,6 +64,16 @@ This function adds empty rows to the data.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{rows}{The number of rows to add.}
 }}}}
+\methodname{as_sts(pop_name = 'pop',freq_name = 'freq',start_name = 'start',epoch_name = 'epoch',map_name = 'map',neighbourhood_name = 'neighbourhood')}{
+Convert this object to an sts object with as much information as possible
+\describe{\item{\emph{Arguments}}{\tabular{lcl}{
+\methoditem{pop_name}{string with the name of rowData to use as the population of the sts object.}
+\methoditem{freq_name}{string with the name of metaData to use as the frequency of the sts object.}
+\methoditem{start_name}{string with the name of metaData to use as the start of the sts object.}
+\methoditem{epoch_name}{string with the name of the colData to use as the epoch of the sts object.}
+\methoditem{map_name}{string with the name of the rowData to use as the map of the sts object.}
+\methoditem{neighbourhood_name}{string with the name of the rowData to use as the neighbourhood of th ests object.}
+}}}}
 \methodname{debug(string)}{
 A function for debugging the methods of this class.  It calls the \link{browser} command.  In order for methods to opt into to debugging, they need to implement the following code at the beginning: if(<method_name> \%in\% private$.debug)\{browser()\}.  This method exists, because the debugger is not always intuitive when it comes to debugging R6 methods.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
