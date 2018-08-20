@@ -204,7 +204,7 @@ RecursiveForecastModel <- R6Class(
     #' @param steps The number of timesteps into the future to predict.
     #' @param addToData Whether or not to mutate the data to incorporate the new predictions.
     #' @return private$output This function should both modify and return private$output.
-    forecast = function(newdata,steps=1){
+    forecast = function(newdata = private$.data,steps=1){
 
       ## for debugging: see AbstractClasses.R::Generic::debug for details.
       if('forecast' %in% private$.debug){
