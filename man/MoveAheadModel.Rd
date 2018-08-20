@@ -107,7 +107,7 @@ Fit the model for predicting.  This method breaks down the fitting  process into
 This method is included for compliance with the standard but does nothing.  This model does not need to be fit.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 }}}}
-\methodname{forecast(newdata,steps=1)}{
+\methodname{forecast(newdata = private$.data,steps=1)}{
 Using a model previously fit with \code{fit} to predict the next \code{steps} columns.  This function assumes that all of the data preprocessing has already been taken care of.  This function is similar to predict, except that it can predict multiple time steps into the future instead of a single timestep.
 \describe{\item{\emph{Arguments}}{\tabular{lcl}{
 \methoditem{newdata}{The data to forecast from.}
