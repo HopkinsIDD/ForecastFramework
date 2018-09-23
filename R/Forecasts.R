@@ -108,22 +108,29 @@ SimulatedForecast <- R6Class(
   ),
   public = list(
     #' @method mean This method extracts the elementwise mean of the forecast.  This function will not change the number of rows or columns in the data, but will convert probabilistic estimates into deterministic ones.
-    mean = function(){
-      self$data$summarize(mean)
+    #' @param trim the fraction (0 to 0.5) of observations to be trimmed from each end of ‘x’ before the mean is computed.  Values of trim outside that range are taken as the nearest endpoint.
+    #' @param na.rm a logical value indicating whether ‘NA’ values should be stripped before the computation proceeds.
+    #' @return An IncidenceMatrix with the mean over all simulations.
+    mean = function(trim = 0,na.rm = FALSE){
+      self$data$summarize(mean,trim,na.rm)
     },
     #' @method median This method extracts the elementwise median of the forecast.  This function will not change the number of rows or columns in the data, but will convert probabilistic estimates into deterministic ones.
     #' @return a MatrixData.
-    median = function(){
-      self$data$summarize(median)
+    #' @param na.rm a logical value indicating whether ‘NA’ values should be stripped before the computation proceeds.
+    #' @return An IncidenceMatrix with the median over all simulations.
+    median = function(na.rm=FALSE){
+      self$data$summarize(median,...)
     },
-    #' @method quantile Get the cutoffs for each percentile in alphas.
-    #' @param alphas A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for.
-    #' @param na.rm A boolean regarding whether to remove NA values before computing the quantiles.
-    #' @return an ArrayData.
-    quantile = function(alphas,na.rm=FALSE){
+    #' @method quantile Get the cutoffs for each percentile in probs.
+    #' @param probs A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for. (Values up to ‘2e-14’ outside that range are accepted and moved to the nearby endpoint.)
+    #' @param na.rm logical; if true, any 'NA' and 'NaN''s are removed from 'x' before the quantiles are computed.
+    #' @param names logical; if true, the result has a 'names' attribute.  Set to 'FALSE' for speedup with many 'probs'.
+    #' @param type an integer between 1 and 9 selecting one of the nine quantile algorithms detailed below to be used.
+    #' @return an ArrayData where the rows and columns correspond to the .
+    quantile = function(probs,na.rm=FALSE,names=TRUE,type=7){
       SimulatedIncidenceMatrix$new(
         lapply(
-          alphas,
+          probs,
           function(alpha){
             self$data$summarize(function(x){quantile(x , alpha,na.rm=na.rm)})
           }
