@@ -119,7 +119,7 @@ SimulatedForecast <- R6Class(
     #' @param na.rm a logical value indicating whether ‘NA’ values should be stripped before the computation proceeds.
     #' @return An IncidenceMatrix with the median over all simulations.
     median = function(na.rm=FALSE){
-      self$data$summarize(median,...)
+      self$data$summarize(median,na.rm)
     },
     #' @method quantile Get the cutoffs for each percentile in probs.
     #' @param probs A numeric vector with elements between \code{0} and \code{1} of percentiles to find cutoffs for. (Values up to ‘2e-14’ outside that range are accepted and moved to the nearby endpoint.)
