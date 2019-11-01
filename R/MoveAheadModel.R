@@ -19,9 +19,9 @@ MoveAheadModel <- R6Class(
   classname = 'MoveAheadModel',
   inherit = RecursiveForecastModel,
   private = list(
-    .data = IncidenceMatrix$new(),
-    newdata = IncidenceMatrix$new(),
-    output = ArrayData$new(),
+    .data = fake_instance(IncidenceMatrix$new()),
+    newdata = fake_instance(IncidenceMatrix$new()),
+    output = fake_instance(ArrayData$new()),
   	.nsim = 3,
     .predCols = c(as.integer(1)),
     .maxPredCol = as.integer(1)

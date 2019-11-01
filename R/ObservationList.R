@@ -27,7 +27,7 @@ ObservationList<- R6Class(
   inherit = AbstractObservationList,
   private = list(
     .aggregate = NULL,
-    .frame = data_frame(),
+    .frame = tibble::tibble(),
     aCurrent = FALSE,
     .aDims = list(),
     .aVal = '',
@@ -140,15 +140,15 @@ ObservationList<- R6Class(
     #' @method initialize Create a new ObservationList with \code{frame} given by \code{data}
     #' @param data A data frame to use as the frame of the ObservationList
     #' @param \dots A list of arguments to pass to the formArray function.  These arguments determine how the ObservationList behaves as an ArrayData objec.
-    #' @importFrom dplyr data_frame
-    initialize = function(data=data_frame(),...){
-    	#' @importFrom dplyr as_data_frame
+    #' @importFrom tibble tibble
+    initialize = function(data=tibble::tibble(),...){
+    	#' @importFrom tibble as_tibble
       if("FrameData" %in% class(data)){
         self$frame = data$frame
       } else if(!is.null(data$frame)){
         self$frame <- data$frame
       } else {
-        self$frame <- as_data_frame(data)
+        self$frame <- as_tibble(data)
       }
      
       self$formArray(...)
@@ -541,10 +541,10 @@ ObservationList<- R6Class(
       }
       private$aCurrent = FALSE
       if(class(value) != 'function'){
-        stop("Not a function.  aggregate should be a function taking a single data_frame argument called input_data")
+        stop("Not a function.  aggregate should be a function taking a single tibble argument called input_data")
       }
       if(length(names(formals(fun=value))) != 1){
-        stop("Not a valid function for aggregation.  A valid aggregation function must take a single data_frame argument.")
+        stop("Not a valid function for aggregation.  A valid aggregation function must take a single tibble argument.")
       }
       private$.aggregate = value
     }

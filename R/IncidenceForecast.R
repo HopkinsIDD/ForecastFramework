@@ -25,7 +25,7 @@ IncidenceForecast <- R6Class(
   classname = "IncidenceForecast",
   inherit = SimulatedForecast,
   private = list(
-    .data = AbstractSimulatedIncidenceMatrix$new()
+    .data = fake_instance(AbstractSimulatedIncidenceMatrix$new())
   ),
   public = list(
     #' @method initialize Create a new IncidenceForecast.

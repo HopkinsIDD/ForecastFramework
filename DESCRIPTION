@@ -1,25 +1,24 @@
 Package: ForecastFramework
 Title: A Basis for Modular Model Creation
-Version: 0.10.0
+Version: 0.10.2
 Authors@R: c(
   person("Joshua", "Kaminsky", email = "jkaminsky@jhu.edu", role = c("aut", "cre")),
   person("Justin", "Lessler", email = "justin@jhu.edu", role = c("aut")),
   person("Nicholas", "Reich", email = "nick@schoolph.umass.edu", role = c("aut")))
-Author: Joshua Kaminsky [aut, cre]
 Maintainer: Joshua Kaminsky <jkaminsky@jhu.edu>
 Description: Create modular models.  Quickly prototype models whose input includes (multiple) time series data.  Create pieces of model use cases separately, and swap out particular models as desired. Create modeling competitions, data processing pipelines, and re-useable models.
 Depends:
     R6
 Imports:
-    abind,lubridate,dplyr,reshape2,magrittr
+    abind,lubridate,dplyr,reshape2,magrittr,tibble
 Suggests:
-    testthat,ggplot2,knitr,rmarkdown,dtplyr,data.table,DAAG
+    testthat,knitr,rmarkdown,DAAG
 Enhances:
     surveillance
 Encoding: UTF-8
-License: GPL (>= 2)
+License: GPL-3
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Collate: 
     'AbstractClasses.R'
     'DataContainers.R'

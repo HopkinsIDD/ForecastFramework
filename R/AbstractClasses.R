@@ -9,6 +9,12 @@
 ######################################Generic###################################
 #' @importFrom R6 R6Class
 
+fake_instance <- function(object){
+  rc <- list()
+  class(rc) <- class(object)
+  return(rc)
+}
+
 #This is a class which contains some helper functionality not part of the R6 package, but that I like.
 Generic <- R6Class(
   classname = "Generic",

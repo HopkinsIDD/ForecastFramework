@@ -23,7 +23,7 @@ SimpleForecast <- R6Class(
   classname = "SimpleForecast",
   inherit = Forecast,
   private = list(
-    .data = MatrixData$new()
+    .data = fake_instance(MatrixData$new())
   ),
   public = list(
     #' @method binDist This throws an error.  This method is not meaningful for this data.

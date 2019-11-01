@@ -28,8 +28,8 @@ Forecast <- R6Class(
   private = list(
     .forecastMadeTime = NA,
     .forecastTimes = NA,
-    .model = Generic$new(),
-    .data = MatrixData$new()
+    .model = fake_instance(Generic$new()),
+    .data = fake_instance(MatrixData$new())
   ),
   public = list(
     #' @method mean This \bold{must} be extended.  This method extracts the elementwise mean of the forecast.  This function will not change the number of rows or columns in the data, but will convert probabilistic estimates into deterministic ones.
@@ -104,7 +104,7 @@ SimulatedForecast <- R6Class(
   inherit = Forecast,
   private = list(
     .nsim = 0,
-    .data = AbstractSimulatedIncidenceMatrix$new()
+    .data = fake_instance(AbstractSimulatedIncidenceMatrix$new())
   ),
   public = list(
     #' @method mean This method extracts the elementwise mean of the forecast.  This function will not change the number of rows or columns in the data, but will convert probabilistic estimates into deterministic ones.

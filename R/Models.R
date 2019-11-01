@@ -27,7 +27,7 @@ Model <- R6Class(
   classname="Model",
   inherit = Generic,
   private = list(
-    output = Forecast$new()
+    output = fake_instance(Forecast$new())
   ),
   public = list(
     #' @method predict This method \bold{must} be extended.  Predict using the model
@@ -91,15 +91,15 @@ RecursiveForecastModel <- R6Class(
   inherit=ForecastModel,
   private = list(
     ##Where we put the data used for fitting/predicting.
-    .data = MatrixData$new(),
+    .data = fake_instance(MatrixData$new()),
     ##Where we put temporary data during either fitting or predicting.
-    newdata = MatrixData$new(),
+    newdata = fake_instance(MatrixData$new()),
     ##Since the model is matrix-like, we keep track of which columns (relative to the current column)
     ##We keep track of whether the model has been fit to some data or not.
     modelFitted = FALSE,
     .maxPredCol = as.integer(NA),
     .predCols = as.integer(c(NA)),
-    output=SimulatedForecast$new(),
+    output= fake_instance(SimulatedForecast$new()),
     .stochastic = 'Deterministic',
     .nrow = NA,
     rownames = c(''),

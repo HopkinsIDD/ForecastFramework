@@ -732,8 +732,8 @@ FrameData <- R6Class(
   classname = "FrameData",
   inherit = ArrayData,
   private = list(
-    #' @importFrom dplyr data_frame
-    .frame = data_frame()
+    #' @importFrom tibble tibble
+    .frame = tibble()
   ),
   active = list(
     #' @field frame The data frame this class is responsible for.
@@ -763,8 +763,8 @@ AbstractObservationList <- R6Class(
     ##Variables starting with a '.' represent hidden values corresponding to
     ##active bindings of the same name without the .
     ##Typing is not as strong as it could be here...
-    #' @importFrom dplyr data_frame
-    .frame = data_frame(),
+    #' @importFrom tibble tibble
+    .frame = tibble(),
     updateArray = function(){
       private$defaultAbstract()
     }
@@ -809,8 +809,8 @@ RelationalData <- R6Class(
   classname = "RelationalData",
   inherit = FrameData,
   private = list(
-    #' @importFrom dplyr data_frame
-    .tables = list(data_frame())
+    #' @importFrom tibble tibble 
+    .tables = list(tibble())
   ),
   active = list(
     #' @field tables The tables which make up the relational database.
@@ -838,8 +838,8 @@ AbstractRelationalTables <- R6Class(
   inherit = RelationalData,
   private = list(
     ##Variables starting with a '.' represent hidden values corresponding to active bindings of the same name without the .
-    #' @importFrom dplyr data_frame
-    .tables = list(data_frame()),
+    #' @importFrom tibble tibble 
+    .tables = list(tibble()),
     ##.keys will store the column names for the identifying columns for the
     ##  tables.
     .keys = list(character()),
