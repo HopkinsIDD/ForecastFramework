@@ -24,8 +24,8 @@ test_that('IncidenceMatrix initialize works',{
   expect_equivalent(IncidenceMatrix$new(data=matrix())$mat,matrix())
   ##expect_error(IncidenceMatrix$new(data.frame(),NA)
   ##expect_equal(IncidenceMatrix$new(data=data.frame())$mat,matrix())
-  ##expect_error(IncidenceMatrix$new(data_frame(),NA)
-  ##expect_equal(IncidenceMatrix$new(data=data_frame())$mat,matrix())
+  ##expect_error(IncidenceMatrix$new(tibble(),NA)
+  ##expect_equal(IncidenceMatrix$new(data=tibble())$mat,matrix())
   expect_error(IncidenceMatrix$new(data=matrix(),rowData=list(),colData=list(),metaData=list()),NA)
   expect_equivalent(IncidenceMatrix$new(data=matrix(),rowData=list(),colData=list(),metaData=list())$mat,matrix())
   expect_equal(IncidenceMatrix$new(data=matrix(),rowData=list(),colData=list(),metaData=list())$rowData,list())
@@ -84,7 +84,7 @@ test_that('IncidenceMatrix initialize works',{
 testIncidenceMatrix = IncidenceMatrix$new()
 test_AbstractIncidenceMatrix(testIncidenceMatrix,"Empty IncidenceMatrix",is_same_AbstractIncidenceMatrix_as)
 testIncidenceMatrix = IncidenceMatrix$new(
-  data_frame(x=1:10,y=1:10),
+  tibble(x=1:10,y=1:10),
   rowData=list(
     letters[1:10],
     letters[5:14],

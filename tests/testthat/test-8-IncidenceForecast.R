@@ -24,7 +24,7 @@ testSimulatedIncidenceMatrix = SimulatedIncidenceMatrix$new(IncidenceMatrix$new(
 testSimulatedIncidenceMatrix$sample
 test_SimulatedForecast(IncidenceForecast$new(testSimulatedIncidenceMatrix,forecastTimes=T),"Empty IncidenceForecast",is_same_IncidenceForecast_as)
 testIncidenceMatrix = IncidenceMatrix$new(
-  t(data_frame(x=1:10,y=1:10)),
+  t(tibble(x=1:10,y=1:10)),
   colData=list(letters[1:10],letters[5:14]),
   rowData=list(w=1:2,z=list(3,4))
 )

@@ -58,7 +58,7 @@ test_that('test functions load',{
 #testData3$metaData$max.yr.time = 20
 #
 #testData4 = ObservationList$new(
-#  as_data_frame(testData3$colData) %>%
+#  as_tibble(testData3$colData) %>%
 #    mutate(column=1:testData3$ncol) %>%
 #    inner_join(melt(testData3$mat),by=c('column'='Var2')),
 #  metaData=testData3$metaData

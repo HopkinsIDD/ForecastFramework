@@ -27,12 +27,12 @@ is_same_ObservationList_as = function(rhs){
 
 #test_IncidenceMatrix_initialization()
 
-testObservationList = ObservationList$new(data_frame(row=1,col=1,val=NA))
+testObservationList = ObservationList$new(tibble(row=1,col=1,val=NA))
 testObservationList$formArray('row','col',val='val')
 testObservationList$mat
 test_AbstractObservationList(testObservationList,"Empty ObservationList",is_same_ObservationList_as)
 testObservationList = ObservationList$new(
-  data_frame(x=letters[((1:1000) %% 26)+1],y=((1:1000)*51) %% 7,val=1:1000*0+1,w=1:1000 %% 26),'x','y',val='val',dimData = list(list('w'),NULL)
+  tibble(x=letters[((1:1000) %% 26)+1],y=((1:1000)*51) %% 7,val=1:1000*0+1,w=1:1000 %% 26),'x','y',val='val',dimData = list(list('w'),NULL)
 )
 testObservationList$formArray('x','y',val='val')
 testObservationList$mat
